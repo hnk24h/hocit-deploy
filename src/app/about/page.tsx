@@ -1,6 +1,6 @@
 export const metadata = {
   title: 'Giới thiệu',
-  description: 'Về HocIT - Blog học lập trình',
+  description: 'Về Ikagi - Blog học lập trình',
 }
 
 export default function AboutPage() {
@@ -10,7 +10,7 @@ export default function AboutPage() {
         <div className="max-w-4xl mx-auto px-4">
           <h1 className="text-4xl font-bold mb-4">Giới thiệu</h1>
           <p className="text-xl text-blue-100">
-            Về HocIT - Nơi học lập trình hiệu quả
+            Về Ikagi - Nơi học lập trình hiệu quả
           </p>
         </div>
       </section>

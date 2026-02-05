@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* About */}
           <div>
-            <h3 className="text-white text-lg font-bold mb-4">HocIT</h3>
+            <h3 className="text-white text-lg font-bold mb-4">Ikagi</h3>
             <p className="text-sm">
               Blog chia sẻ kiến thức lập trình từ cơ bản đến nâng cao. 
               Học SQL, JavaScript và nhiều công nghệ khác.
@@ -57,7 +57,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
-          <p>© {currentYear} HocIT. All rights reserved.</p>
+          <p>© {currentYear} Ikagi. All rights reserved.</p>
         </div>
       </div>
     </footer>

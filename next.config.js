@@ -6,9 +6,8 @@ const nextConfig = {
   },
   trailingSlash: true,
   skipTrailingSlashRedirect: true,
-  // Disable automatic 404 generation for static export
   generateBuildId: async () => {
-    return 'build-' + Date.now()
+    return 'build'
   },
 }
 

@@ -2,7 +2,7 @@ import { getAllCategories, getArticlesByCategory } from '@/lib/articles'
 import Link from 'next/link'
 
 export const metadata = {
-  title: 'Danh mục - HocIT',
+  title: 'Danh mục - Ikagi',
   description: 'Khám phá các danh mục bài viết',
 }
 

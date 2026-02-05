@@ -10,13 +10,13 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://hocit.vercel.app'),
   title: {
-    default: 'HocIT - Học Lập Trình',
-    template: '%s | HocIT',
+    default: 'Ikagi - Học Lập Trình',
+    template: '%s | Ikagi',
   },
   description: 'Technical blog về lập trình, SQL, JavaScript và nhiều hơn nữa',
   keywords: ['lập trình', 'programming', 'SQL', 'JavaScript', 'tutorial', 'học lập trình'],
-  authors: [{ name: 'HocIT' }],
-  creator: 'HocIT',
+  authors: [{ name: 'Ikagi' }],
+  creator: 'Ikagi',
   openGraph: {
     type: 'website',
     locale: 'vi_VN',

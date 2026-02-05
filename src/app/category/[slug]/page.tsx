@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   const categoryName = params.slug.charAt(0).toUpperCase() + params.slug.slice(1)
   
   return {
-    title: `${categoryName} - HocIT`,
+    title: `${categoryName} - Ikagi`,
     description: `Tất cả bài viết về ${categoryName}`,
   }
 }
