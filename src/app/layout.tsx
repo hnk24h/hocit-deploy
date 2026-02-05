@@ -4,6 +4,8 @@ import './globals.css'
 import './prism-tomorrow.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
+import { StructuredData } from '@/components/StructuredData'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,13 +23,13 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'vi_VN',
     url: '/',
-    title: 'HocIT - Học Lập Trình',
+    title: 'Ikagi - Học Lập Trình',
     description: 'Technical blog về lập trình, SQL, JavaScript và nhiều hơn nữa',
-    siteName: 'HocIT',
+    siteName: 'Ikagi',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'HocIT - Học Lập Trình',
+    title: 'Ikagi - Học Lập Trình',
     description: 'Technical blog về lập trình, SQL, JavaScript và nhiều hơn nữa',
   },
   robots: {
@@ -50,7 +52,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="vi">
+      <head>
+        <StructuredData type="Website" data={{}} />
+      </head>
       <body className={inter.className}>
+        <GoogleAnalytics />
         <div className="flex flex-col min-h-screen">
           <Header />
           <div className="flex-grow">

@@ -45,7 +45,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
 
   return (
     <nav className="toc">
-      <h2 className="text-lg font-bold mb-4 text-gray-900">Mục lục</h2>
+      <h2 className="text-lg font-bold mb-4 text-gray-900 dark:text-gray-100">Mục lục</h2>
       <ul className="space-y-2">
         {headings.map((heading) => (
           <li
@@ -62,10 +62,10 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
                   behavior: 'smooth'
                 })
               }}
-              className={`block py-1 text-sm hover:text-blue-600 transition-colors ${
+              className={`block py-1 text-sm hover:text-blue-600 dark:hover:text-blue-400 transition-colors ${
                 activeId === heading.id
-                  ? 'text-blue-600 font-medium'
-                  : 'text-gray-600'
+                  ? 'text-blue-600 dark:text-blue-400 font-medium'
+                  : 'text-gray-600 dark:text-gray-400'
               }`}
             >
               {heading.text}

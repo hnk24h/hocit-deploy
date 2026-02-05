@@ -1,6 +1,7 @@
 'use client'
 
 import Giscus from '@giscus/react'
+import { useEffect, useState } from 'react'
 
 interface GiscusCommentsProps {
   slug: string
@@ -9,6 +10,27 @@ interface GiscusCommentsProps {
 }
 
 export default function GiscusComments({ slug, title, enabled = true }: GiscusCommentsProps) {
+  const [theme, setTheme] = useState('light')
+
+  useEffect(() => {
+    // Check for dark mode
+    const isDark = document.documentElement.classList.contains('dark')
+    setTheme(isDark ? 'dark' : 'light')
+
+    // Listen for theme changes
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains('dark')
+      setTheme(isDark ? 'dark' : 'light')
+    })
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    })
+
+    return () => observer.disconnect()
+  }, [])
+
   if (!enabled) {
     return null
   }
@@ -22,8 +44,8 @@ export default function GiscusComments({ slug, title, enabled = true }: GiscusCo
   // Don't render if Giscus is not configured
   if (!repo || !repoId || !category || !categoryId) {
     return (
-      <div className="mt-12 p-6 bg-gray-50 rounded-lg text-center">
-        <p className="text-gray-600">
+      <div className="mt-12 p-6 bg-gray-50 dark:bg-gray-800 rounded-lg text-center">
+        <p className="text-gray-600 dark:text-gray-400">
           Comments are not configured. Please set up Giscus in your environment variables.
         </p>
       </div>
@@ -32,7 +54,7 @@ export default function GiscusComments({ slug, title, enabled = true }: GiscusCo
 
   return (
     <div className="mt-12">
-      <h2 className="text-2xl font-bold mb-6 text-gray-900">Bình luận</h2>
+      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">Bình luận</h2>
       <Giscus
         id="comments"
         repo={repo as `${string}/${string}`}
@@ -44,7 +66,7 @@ export default function GiscusComments({ slug, title, enabled = true }: GiscusCo
         reactionsEnabled="1"
         emitMetadata="0"
         inputPosition="top"
-        theme="light"
+        theme={theme}
         lang="vi"
         loading="lazy"
       />

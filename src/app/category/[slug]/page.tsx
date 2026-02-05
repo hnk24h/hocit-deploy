@@ -38,9 +38,9 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   const categoryName = articles[0].category
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Category Header */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
+      <section className="bg-gradient-to-r from-slate-700 to-slate-800 text-white py-16">
         <div className="max-w-7xl mx-auto px-4">
           <nav className="mb-4">
             <Link href="/" className="text-blue-100 hover:text-white">

@@ -10,9 +10,9 @@ export default function CategoriesPage() {
   const categories = getAllCategories()
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
+      <section className="bg-gradient-to-r from-slate-700 to-slate-800 text-white py-16">
         <div className="max-w-7xl mx-auto px-4">
           <nav className="mb-4">
             <Link href="/" className="text-blue-100 hover:text-white">
@@ -30,7 +30,7 @@ export default function CategoriesPage() {
       <section className="max-w-7xl mx-auto px-4 py-12">
         {categories.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-600 text-lg">
+            <p className="text-gray-600 dark:text-gray-400 text-lg">
               Chưa có danh mục nào.
             </p>
           </div>
@@ -42,12 +42,12 @@ export default function CategoriesPage() {
                 <Link
                   key={category}
                   href={`/category/${category.toLowerCase()}`}
-                  className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6"
+                  className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6"
                 >
-                  <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                     {category}
                   </h2>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 dark:text-gray-400">
                     {articles.length} bài viết
                   </p>
                 </Link>

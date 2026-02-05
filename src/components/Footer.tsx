@@ -4,7 +4,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-gray-900 text-gray-300">
+    <footer className="bg-gray-900 dark:bg-gray-950 text-gray-300 dark:text-gray-400">
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* About */}
@@ -21,17 +21,17 @@ export default function Footer() {
             <h3 className="text-white text-lg font-bold mb-4">Liên kết</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/" className="hover:text-white">
+                <Link href="/" className="hover:text-white transition-colors">
                   Trang chủ
                 </Link>
               </li>
               <li>
-                <Link href="/categories" className="hover:text-white">
+                <Link href="/categories" className="hover:text-white transition-colors">
                   Danh mục
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:text-white">
+                <Link href="/about" className="hover:text-white transition-colors">
                   Giới thiệu
                 </Link>
               </li>
@@ -56,7 +56,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
+        <div className="border-t border-gray-800 dark:border-gray-900 mt-8 pt-8 text-center text-sm">
           <p>© {currentYear} Ikagi. All rights reserved.</p>
         </div>
       </div>

@@ -1,10 +1,10 @@
-import { getAllArticles, getAllCategories } from '@/lib/articles'
+import { getAllArticlesMetadata, getAllCategories } from '@/lib/articles'
 
 export default function sitemap() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://hocit.vercel.app'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://ikagi.site'
   
   // Get all articles
-  const articles = getAllArticles()
+  const articles = getAllArticlesMetadata()
   const articleUrls = articles.map((article) => ({
     url: `${baseUrl}/articles/${article.slug}`,
     lastModified: new Date(article.date),
