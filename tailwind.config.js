@@ -22,6 +22,25 @@ module.exports = {
           900: '#0c4a6e',
         },
       },
+      backgroundImage: {
+        'gradient-primary': 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)',
+        'gradient-hero': 'linear-gradient(135deg, #475569 0%, #1e293b 100%)',
+        'gradient-cta': 'linear-gradient(135deg, #0284c7 0%, #3b82f6 100%)',
+        'gradient-card': 'linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%)',
+      },
+      borderRadius: {
+        'card': '0.75rem',
+        'button': '0.5rem',
+        'badge': '9999px',
+        'section': '1rem',
+      },
+      boxShadow: {
+        'elevation-1': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+        'elevation-2': '0 2px 8px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        'elevation-3': '0 4px 16px -2px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        'elevation-4': '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+        'elevation-hover': '0 20px 40px -10px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+      },
       typography: {
         DEFAULT: {
           css: {

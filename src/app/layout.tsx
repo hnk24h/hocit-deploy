@@ -51,17 +51,21 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="vi">
+    <html lang="vi" suppressHydrationWarning>
       <head>
         <StructuredData type="Website" data={{}} />
       </head>
-      <body className={inter.className}>
+      <body className={inter.className} suppressHydrationWarning>
         <GoogleAnalytics />
+        {/* Skip to main content - Accessibility */}
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <div className="flex flex-col min-h-screen">
           <Header />
-          <div className="flex-grow">
+          <main id="main-content" className="flex-grow">
             {children}
-          </div>
+          </main>
           <Footer />
         </div>
       </body>

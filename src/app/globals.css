@@ -2,8 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+/* Font optimization: Inter font loaded via Next.js in layout.tsx */
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -19,9 +18,36 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-end-rgb));
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  @apply transition-colors duration-300;
+  background-color: rgb(var(--background-end-rgb));
+  transition: background-color 300ms;
+}
+
+/* Accessibility: Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
 }
 
 /* Smooth scroll */
@@ -75,23 +101,113 @@ a {
   @apply transition-colors duration-200;
 }
 
-/* Focus visible */
+/* Focus visible - Enhanced for accessibility */
 *:focus-visible {
-  @apply outline-none ring-2 ring-brand-500 dark:ring-brand-400 ring-offset-2 dark:ring-offset-gray-900;
+  @apply outline-none ring-4 ring-brand-500/50 dark:ring-brand-400/50 ring-offset-2 dark:ring-offset-gray-900;
+}
+
+/* Interactive elements get stronger focus */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  @apply ring-4 ring-brand-500 dark:ring-brand-400 ring-offset-2;
 }
 
 /* Custom utilities */
 @layer utilities {
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-slate-700 to-slate-800;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-600 to-blue-600;
   }
   
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+    @apply transition-all duration-300 hover:shadow-elevation-hover hover:-translate-y-1;
   }
   
   .link-underline {
     @apply relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-brand-600 dark:after:bg-brand-400 after:transition-all after:duration-300 hover:after:w-full;
+  }
+
+  /* Touch target minimum size */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+  }
+
+  /* Page container */
+  .page-container {
+    @apply min-h-screen bg-gray-50 dark:bg-gray-900 py-12;
+  }
+
+  /* Page header */
+  .page-header {
+    @apply text-center mb-12;
+  }
+
+  /* Page title */
+  .page-title {
+    @apply text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4;
+  }
+
+  /* Page description */
+  .page-description {
+    @apply text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto;
+  }
+
+  /* Section title */
+  .section-title {
+    @apply text-3xl font-bold text-gray-900 dark:text-white mb-3;
+  }
+
+  /* Card base */
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-card border border-gray-200 dark:border-gray-700 shadow-elevation-2;
+  }
+
+  /* Card hover effect */
+  .card-interactive {
+    @apply card transition-all duration-300 hover:shadow-elevation-3 hover:-translate-y-0.5;
+  }
+}
+
+@layer components {
+  /* Skip to main content link */
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-brand-600 text-white px-6 py-3 rounded-button font-semibold shadow-elevation-4 z-50;
+  }
+
+  /* Badge base */
+  .badge {
+    @apply inline-flex items-center justify-center px-2.5 py-1 rounded-badge text-xs font-bold touch-target;
+  }
+
+  /* Badge variants */
+  .badge-hot {
+    @apply badge bg-red-500 text-white;
+    animation: subtle-scale 2s ease-in-out infinite;
+  }
+
+  .badge-new {
+    @apply badge bg-green-500 text-white;
+  }
+
+  .badge-featured {
+    @apply badge bg-yellow-500 text-gray-900;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    @apply bg-gradient-cta rounded-section p-8 md:p-12 text-center text-white shadow-elevation-3;
+  }
+}
+
+/* Badge animation - GPU accelerated */
+@keyframes subtle-scale {
+  0%, 100% { 
+    transform: scale(1); 
+  }
+  50% { 
+    transform: scale(1.05); 
   }
 }
 
@@ -194,4 +310,44 @@ a {
 .ProseMirror div[data-youtube-video] iframe {
   @apply w-full rounded-lg;
   aspect-ratio: 16/9;
+}
+
+/* React PDF Styles */
+.react-pdf__Page {
+  @apply my-4;
+}
+
+.react-pdf__Page__canvas {
+  @apply max-w-full h-auto;
+}
+
+.react-pdf__Page__textContent {
+  @apply select-text;
+}
+
+.react-pdf__Page__annotations {
+  @apply select-none;
+}
+
+/* PDF Reader Text Layer */
+.react-pdf__Page__textContent span {
+  @apply text-transparent;
+}
+
+/* Responsive PDF adjustments */
+@media (max-width: 640px) {
+  .react-pdf__Page {
+    @apply my-2;
+  }
+  
+  .react-pdf__Page__canvas {
+    @apply w-full;
+  }
+}
+
+/* Smooth transitions for controls */
+@media (prefers-reduced-motion: no-preference) {
+  .react-pdf__Page {
+    @apply transition-all duration-300;
+  }
 }

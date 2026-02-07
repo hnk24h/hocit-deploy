@@ -42,27 +42,43 @@ interface MarkdownEditorProps {
   onChange: (markdown: string) => void
 }
 
-const turndownService = new TurndownService({
-  headingStyle: 'atx',
-  codeBlockStyle: 'fenced',
-})
+// Configure turndown with error handling
+const createTurndownService = () => {
+  try {
+    const service = new TurndownService({
+      headingStyle: 'atx',
+      codeBlockStyle: 'fenced',
+    })
 
-// Preserve iframes/videos in markdown
-turndownService.addRule('iframe', {
-  filter: 'iframe',
-  replacement: function (content, node: any) {
-    const src = node.getAttribute('src') || ''
-    const width = node.getAttribute('width') || '100%'
-    const height = node.getAttribute('height') || '400'
-    return `\n<iframe src="${src}" width="${width}" height="${height}" frameborder="0" allowfullscreen></iframe>\n`
-  },
-})
+    // Preserve iframes/videos in markdown
+    service.addRule('iframe', {
+      filter: 'iframe',
+      replacement: function (content, node: any) {
+        try {
+          const src = node.getAttribute('src') || ''
+          const width = node.getAttribute('width') || '100%'
+          const height = node.getAttribute('height') || '400'
+          return `\n<iframe src="${src}" width="${width}" height="${height}" frameborder="0" allowfullscreen></iframe>\n`
+        } catch (error) {
+          console.error('Error converting iframe:', error)
+          return ''
+        }
+      },
+    })
+
+    return service
+  } catch (error) {
+    console.error('Error creating turndown service:', error)
+    return new TurndownService()
+  }
+}
 
 export default function MarkdownEditor({ content, onChange }: MarkdownEditorProps) {
   const previousContentRef = useRef<string>('')
   const [showVideoModal, setShowVideoModal] = useState(false)
   const [videoUrl, setVideoUrl] = useState('')
   const [videoType, setVideoType] = useState<'youtube' | 'iframe'>('youtube')
+  const turndownService = useRef(createTurndownService()).current
   
   const editor = useEditor({
     extensions: [
@@ -92,25 +108,66 @@ export default function MarkdownEditor({ content, onChange }: MarkdownEditorProp
         class: 'prose prose-lg max-w-none focus:outline-none min-h-[500px] p-6 overflow-wrap-anywhere',
       },
       transformPastedHTML(html) {
-        // Preserve iframes when pasting
-        return html
+        // Preserve iframes when pasting HTML
+        try {
+          return html
+        } catch (error) {
+          console.error('Error transforming pasted HTML:', error)
+          return ''
+        }
+      },
+      transformPastedText(text) {
+        // Handle plain text paste - convert to paragraphs
+        try {
+          return text
+        } catch (error) {
+          console.error('Error transforming pasted text:', error)
+          return ''
+        }
+      },
+      handlePaste: (view, event, slice) => {
+        // Let TipTap handle paste normally
+        return false
       },
     },
     parseOptions: {
       preserveWhitespace: 'full',
     },
     onUpdate: ({ editor }) => {
-      const html = editor.getHTML()
-      const markdown = turndownService.turndown(html)
-      onChange(markdown)
+      try {
+        const html = editor.getHTML()
+        const markdown = turndownService.turndown(html)
+        onChange(markdown)
+      } catch (error) {
+        console.error('Error converting to markdown:', error)
+        // Try to fallback to plain text if markdown conversion fails
+        try {
+          const text = editor.getText()
+          onChange(text)
+        } catch (fallbackError) {
+          console.error('Fallback also failed:', fallbackError)
+        }
+      }
     },
   })
 
   // Update editor content when prop changes (e.g., loading a different post)
   useEffect(() => {
-    if (editor && content && content !== previousContentRef.current) {
-      editor.commands.setContent(content)
-      previousContentRef.current = content
+    if (editor && content !== undefined && content !== previousContentRef.current) {
+      try {
+        // Set content safely
+        if (content === '') {
+          editor.commands.setContent('<p></p>')
+        } else {
+          editor.commands.setContent(content)
+        }
+        previousContentRef.current = content
+      } catch (error) {
+        console.error('Error setting editor content:', error)
+        // Fallback to empty paragraph if content is invalid
+        editor.commands.setContent('<p></p>')
+        previousContentRef.current = ''
+      }
     }
   }, [content, editor])
 
@@ -233,11 +290,48 @@ export default function MarkdownEditor({ content, onChange }: MarkdownEditorProp
         >
           HR
         </button>
+        
+        {/* Divider */}
+        <div className="border-l border-gray-300 dark:border-gray-600 mx-1"></div>
+        
+        {/* Undo/Redo */}
+        <button
+          onClick={() => editor.chain().focus().undo().run()}
+          disabled={!editor.can().undo()}
+          className="px-3 py-1 rounded text-sm font-medium bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          title="Undo (Ctrl+Z)"
+        >
+          ↶ Undo
+        </button>
+        <button
+          onClick={() => editor.chain().focus().redo().run()}
+          disabled={!editor.can().redo()}
+          className="px-3 py-1 rounded text-sm font-medium bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          title="Redo (Ctrl+Shift+Z)"
+        >
+          ↷ Redo
+        </button>
+        
+        {/* Divider */}
+        <div className="border-l border-gray-300 dark:border-gray-600 mx-1"></div>
+        
         <button
           onClick={() => setShowVideoModal(true)}
           className="px-3 py-1 rounded text-sm font-medium bg-red-500 text-white hover:bg-red-600 transition-colors"
         >
           📹 Video
+        </button>
+        <button
+          onClick={() => {
+            if (confirm('Xóa toàn bộ nội dung?')) {
+              editor.commands.clearContent()
+              onChange('')
+            }
+          }}
+          className="px-3 py-1 rounded text-sm font-medium bg-orange-500 text-white hover:bg-orange-600 transition-colors"
+          title="Clear all content"
+        >
+          🗑️ Clear
         </button>
       </div>
 
@@ -318,6 +412,11 @@ export default function MarkdownEditor({ content, onChange }: MarkdownEditorProp
       {/* Editor Content */}
       <div className="bg-white dark:bg-gray-900 overflow-auto max-h-[700px]">
         <EditorContent editor={editor} />
+      </div>
+      
+      {/* Tips */}
+      <div className="border-t border-gray-300 dark:border-gray-700 p-2 bg-gray-50 dark:bg-gray-800 text-xs text-gray-600 dark:text-gray-400">
+        💡 <strong>Tips:</strong> Paste text từ Word/Google Docs có thể gây lỗi. Nếu gặp vấn đề, sử dụng Ctrl+Shift+V (paste plain text) hoặc click "Clear" để reset.
       </div>
     </div>
   )

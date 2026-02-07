@@ -7,7 +7,7 @@ interface ArticleCardProps {
 
 export default function ArticleCard({ article }: ArticleCardProps) {
   return (
-    <article className="bg-white dark:bg-gray-800 rounded-xl shadow-md card-hover p-6 border border-gray-100 dark:border-gray-700 animate-fade-in group">
+    <article className="card-interactive p-6 animate-fade-in group">
       <Link href={`/articles/${article.slug}`}>
         <div className="mb-4">
           <span className="inline-block bg-brand-100 dark:bg-brand-900 text-brand-700 dark:text-brand-300 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide">

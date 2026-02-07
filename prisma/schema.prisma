@@ -1,0 +1,142 @@
+// This is your Prisma schema file for affiliate features
+// Currently optional - can use file-based approach for MVP
+// To use: npm install @prisma/client prisma
+// Then: npx prisma generate && npx prisma db push
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Affiliate Link Management
+model AffiliateLink {
+  id          String   @id @default(cuid())
+  slug        String   @unique // For /go/[slug] URLs
+  targetUrl   String   // Actual affiliate URL
+  product     String   // Product name
+  merchant    String   // Amazon, Udemy, etc.
+  commission  Float?   // Commission percentage
+  clicks      Int      @default(0)
+  conversions Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  clickEvents ClickEvent[]
+  
+  @@index([slug])
+  @@index([merchant])
+}
+
+// Track every click for analytics
+model ClickEvent {
+  id        String   @id @default(cuid())
+  linkId    String
+  userId    String?  // Optional user tracking
+  ipHash    String   // Hashed IP for privacy
+  userAgent String
+  referrer  String?
+  country   String?
+  device    String?  // mobile, desktop, tablet
+  timestamp DateTime @default(now())
+  
+  link AffiliateLink @relation(fields: [linkId], references: [id], onDelete: Cascade)
+  
+  @@index([linkId])
+  @@index([timestamp])
+}
+
+// Product Catalog
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String   @db.Text
+  image       String?
+  price       Float?
+  currency    String   @default("USD")
+  rating      Float?   @default(0)
+  reviewCount Int      @default(0)
+  affiliateLink String // URL or slug to AffiliateLink
+  pros        String[] // Array of pros
+  cons        String[] // Array of cons
+  category    String
+  tags        String[]
+  featured    Boolean  @default(false)
+  inStock     Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  reviews Review[]
+  
+  @@index([slug])
+  @@index([category])
+  @@index([featured])
+}
+
+// Product Reviews
+model Review {
+  id        String   @id @default(cuid())
+  productId String
+  author    String
+  rating    Float
+  title     String
+  content   String   @db.Text
+  helpful   Int      @default(0)
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  @@index([productId])
+  @@index([rating])
+}
+
+// Deal/Coupon Management
+model Deal {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @db.Text
+  code        String?  // Coupon code
+  discount    String   // "20% off", "$50 off"
+  affiliateLink String
+  startDate   DateTime
+  endDate     DateTime
+  isActive    Boolean  @default(true)
+  clicks      Int      @default(0)
+  uses        Int      @default(0)
+  createdAt   DateTime @default(now())
+  
+  @@index([endDate])
+  @@index([isActive])
+}
+
+// Email Subscribers
+model Subscriber {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  name        String?
+  subscribed  Boolean  @default(true)
+  interests   String[] // Categories they're interested in
+  source      String?  // Where they signed up from
+  createdAt   DateTime @default(now())
+  
+  @@index([email])
+  @@index([subscribed])
+}
+
+// Analytics Summary (cached)
+model Analytics {
+  id        String   @id @default(cuid())
+  date      DateTime @unique
+  clicks    Int      @default(0)
+  conversions Int    @default(0)
+  revenue   Float    @default(0)
+  visitors  Int      @default(0)
+  
+  @@index([date])
+}
