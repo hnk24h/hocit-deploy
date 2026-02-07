@@ -1,0 +1,35 @@
+{
+  "changes": [
+    {
+      "timestamp": "2026-02-07T23:13:42.033Z",
+      "date": "2026-02-07",
+      "action": "UPDATE_PRODUCT",
+      "details": {
+        "slug": "macbook-pro-m4",
+        "name": "MacBook Pro M4",
+        "category": "Laptops"
+      }
+    },
+    {
+      "timestamp": "2026-02-07T23:14:04.765Z",
+      "date": "2026-02-07",
+      "action": "UPDATE_PRODUCT",
+      "details": {
+        "slug": "macbook-pro-m4",
+        "name": "MacBook Pro M4",
+        "category": "Laptops"
+      }
+    },
+    {
+      "timestamp": "2026-02-07T23:37:52.116Z",
+      "date": "2026-02-07",
+      "action": "UPDATE_PRODUCT",
+      "details": {
+        "slug": "macbook-pro-m4",
+        "name": "MacBook Pro M4",
+        "category": "Laptops"
+      }
+    }
+  ],
+  "note": "This file tracks all changes made to affiliate data. Last 100 changes are kept."
+}
