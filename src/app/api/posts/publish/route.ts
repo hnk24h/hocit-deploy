@@ -16,6 +16,17 @@ interface PublishRequest {
 
 export async function POST(request: NextRequest) {
   try {
+    // Only allow publishing from development mode
+    if (process.env.NODE_ENV === 'production') {
+      return NextResponse.json(
+        { 
+          error: 'Publish chỉ hoạt động ở local development',
+          details: 'Vui lòng chạy editor ở localhost (npm run dev) để publish bài viết.'
+        },
+        { status: 403 }
+      )
+    }
+
     const body: PublishRequest = await request.json()
     const { slug, title } = body
 

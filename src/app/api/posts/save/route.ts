@@ -15,6 +15,17 @@ interface SavePostRequest {
 
 export async function POST(request: NextRequest) {
   try {
+    // Only allow saving in development mode
+    if (process.env.NODE_ENV === 'production') {
+      return NextResponse.json(
+        { 
+          error: 'Editor chỉ hoạt động ở local development',
+          details: 'Vui lòng chạy editor ở localhost (npm run dev), sau đó dùng nút Publish để deploy lên production.'
+        },
+        { status: 403 }
+      )
+    }
+
     const body: SavePostRequest = await request.json()
     const { slug, title, description, date, category, content } = body
 

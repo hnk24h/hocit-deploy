@@ -59,6 +59,14 @@ export default function Header() {
               </li>
               <li>
                 <Link 
+                  href="/blog" 
+                  className="text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors relative link-underline"
+                >
+                  📝 Blog
+                </Link>
+              </li>
+              <li>
+                <Link 
                   href="/categories" 
                   className="text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors relative link-underline"
                 >
@@ -209,6 +217,15 @@ export default function Header() {
                   className="block text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors py-2"
                 >
                   Trang chủ
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/blog" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors py-2"
+                >
+                  📝 Blog
                 </Link>
               </li>
               <li>

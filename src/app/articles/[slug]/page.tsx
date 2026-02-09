@@ -4,6 +4,7 @@ import { extractHeadings, addHeadingIds } from '@/lib/toc'
 import TableOfContents from '@/components/TableOfContents'
 import PrismLoader from '@/components/PrismLoader'
 import GiscusComments from '@/components/GiscusComments'
+import AuthorBio from '@/components/AuthorBio'
 import { StructuredData, generateBreadcrumbStructuredData } from '@/components/StructuredData'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
@@ -122,6 +123,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               className="prose prose-lg max-w-none prose-headings:text-gray-900 dark:prose-headings:text-gray-100 prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-strong:text-gray-900 dark:prose-strong:text-gray-100 prose-code:text-red-600 dark:prose-code:text-red-400 prose-pre:bg-gray-900 dark:prose-pre:bg-gray-800 prose-pre:text-gray-100 dark:prose-li:text-gray-300 dark:prose-blockquote:text-gray-300 dark:prose-blockquote:border-gray-600 [&_iframe]:w-full [&_iframe]:rounded-lg [&_iframe]:my-6"
               dangerouslySetInnerHTML={{ __html: contentHtml }}
             />
+
+            {/* Author Bio */}
+            <AuthorBio />
 
             {/* Comments Section */}
             <GiscusComments slug={article.slug} title={article.title} />

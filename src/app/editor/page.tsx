@@ -26,6 +26,12 @@ function EditorContent() {
   const [autoSlug, setAutoSlug] = useState(true) // Track if slug should auto-generate
   const [previewMode, setPreviewMode] = useState(false) // Toggle between markdown and HTML preview
   const [previewHtml, setPreviewHtml] = useState('')
+  const [isProduction, setIsProduction] = useState(false)
+
+  // Check if running in production
+  useEffect(() => {
+    setIsProduction(process.env.NODE_ENV === 'production' || !window.location.hostname.includes('localhost'))
+  }, [])
 
   // Load categories on mount
   useEffect(() => {
@@ -275,21 +281,45 @@ function EditorContent() {
               </button>
               <button
                 onClick={handleSave}
-                disabled={loading || publishing}
+                disabled={loading || publishing || isProduction}
                 className="px-6 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition-colors"
+                title={isProduction ? 'Editor only works in localhost' : 'Save post to local file'}
               >
                 {loading ? 'Saving...' : '💾 Save Post'}
               </button>
               <button
                 onClick={handlePublish}
-                disabled={loading || publishing || !formData.slug}
+                disabled={loading || publishing || !formData.slug || isProduction}
                 className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition-colors shadow-lg"
-                title={!formData.slug ? 'Save the post first before publishing' : 'Deploy to production'}
+                title={isProduction ? 'Publish only works in localhost' : !formData.slug ? 'Save the post first before publishing' : 'Deploy to production'}
               >
                 {publishing ? '🚀 Publishing...' : '🚀 Publish'}
               </button>
             </div>
           </div>
+
+          {/* Production Warning */}
+          {isProduction && (
+            <div className="mt-4 p-4 bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 rounded-lg">
+              <div className="flex items-start gap-3">
+                <span className="text-2xl">⚠️</span>
+                <div>
+                  <h3 className="font-bold text-yellow-800 dark:text-yellow-300 mb-1">
+                    Editor chỉ hoạt động ở Local Development
+                  </h3>
+                  <p className="text-sm text-yellow-700 dark:text-yellow-400">
+                    Để tạo và publish bài viết, vui lòng:
+                  </p>
+                  <ol className="text-sm text-yellow-700 dark:text-yellow-400 mt-2 ml-4 list-decimal space-y-1">
+                    <li>Chạy <code className="bg-yellow-100 dark:bg-yellow-800 px-1 rounded">npm run dev</code> ở localhost</li>
+                    <li>Truy cập <code className="bg-yellow-100 dark:bg-yellow-800 px-1 rounded">http://localhost:3000/editor</code></li>
+                    <li>Tạo và save bài viết</li>
+                    <li>Click nút <strong>🚀 Publish</strong> để deploy lên production</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Message */}
           {message && (
