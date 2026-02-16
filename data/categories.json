@@ -2,31 +2,68 @@
   "categories": [
     {
       "slug": "laptop",
-      "name": "Laptop",
+      "name": "Mẹo vặt Laptop",
       "icon": "💻",
-      "description": "Laptop cho lập trình viên, designer và gaming",
+      "description": "Mẹo vặt Laptop cho lập trình viên, designer và gaming",
       "count": 0
     },
     {
       "slug": "course",
-      "name": "Khóa học",
+      "name": "Khóa học Tin Học Văn Phòng",
       "icon": "📚",
       "description": "Khóa học online về lập trình, design, marketing",
       "count": 0
     },
     {
       "slug": "topik",
-      "name": "Khóa học Topik",
+      "name": "Khóa học Tiếng Hàn Topik",
       "icon": "📚",
       "description": "Khóa học online về Topik từ cơ bản đến nâng cao",
       "count": 0
     },
     {
-      "slug": "hoc-tieng-nhat",
+      "slug": "tieng-nhat",
       "name": "Khóa học Tiếng Nhật",
-      "icon": "📚",
-      "description": "Khóa học online về Tiếng Nhật từ cơ bản đến nâng cao",
-      "count": 0
+      "icon": "🇯🇵",
+      "description": "Khóa học Tiếng Nhật từ N5 đến N1",
+      "count": 0,
+      "subCategories": [
+        {
+          "slug": "hoc-tieng-nhat-n1",
+          "name": "Khóa học Tiếng Nhật N1",
+          "icon": "⭐",
+          "description": "Khóa học Tiếng Nhật N1 - Trình độ cao nhất",
+          "count": 0
+        },
+        {
+          "slug": "hoc-tieng-nhat-n2",
+          "name": "Khóa học Tiếng Nhật N2",
+          "icon": "⭐",
+          "description": "Khóa học Tiếng Nhật N2 - Trình độ trên trung cấp",
+          "count": 0
+        },
+        {
+          "slug": "hoc-tieng-nhat-n3",
+          "name": "Khóa học Tiếng Nhật N3",
+          "icon": "⭐",
+          "description": "Khóa học Tiếng Nhật N3 - Trình độ trung cấp",
+          "count": 0
+        },
+        {
+          "slug": "hoc-tieng-nhat-n4",
+          "name": "Khóa học Tiếng Nhật N4",
+          "icon": "⭐",
+          "description": "Khóa học Tiếng Nhật N4 - Trình độ sơ trung cấp",
+          "count": 0
+        },
+        {
+          "slug": "hoc-tieng-nhat-n5",
+          "name": "Khóa học Tiếng Nhật N5",
+          "icon": "⭐",
+          "description": "Khóa học Tiếng Nhật N5 - Trình độ cơ bản",
+          "count": 0
+        }
+      ]
     },
     {
       "slug": "hoc-chung-chi-pmp",

@@ -7,6 +7,7 @@ export interface Category {
   icon: string
   description?: string
   count?: number
+  subCategories?: Category[]
 }
 
 const CATEGORIES_FILE = path.join(process.cwd(), 'data', 'categories.json')

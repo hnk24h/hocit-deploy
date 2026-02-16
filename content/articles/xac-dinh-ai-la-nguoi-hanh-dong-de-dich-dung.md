@@ -2,7 +2,7 @@
 title: "XÁC ĐỊNH “AI LÀ NGƯỜI HÀNH ĐỘNG” ĐỂ DỊCH ĐÚNG"
 description: "XÁC ĐỊNH “AI LÀ NGƯỜI HÀNH ĐỘNG” ĐỂ DỊCH ĐÚNG"
 date: "2026-02-09"
-category: "Học Tiếng Nhật"
+category: "tieng-nhat"
 slug: "xac-dinh-ai-la-nguoi-hanh-dong-de-dich-dung"
 ---
 

@@ -5,6 +5,8 @@ import TableOfContents from '@/components/TableOfContents'
 import PrismLoader from '@/components/PrismLoader'
 import GiscusComments from '@/components/GiscusComments'
 import AuthorBio from '@/components/AuthorBio'
+import ViewTracker from '@/components/ViewTracker'
+import ViewCount from '@/components/ViewCount'
 import { StructuredData, generateBreadcrumbStructuredData } from '@/components/StructuredData'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
@@ -81,6 +83,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <ViewTracker slug={article.slug} />
       <PrismLoader />
       
       {/* Structured Data for SEO */}
@@ -109,13 +112,16 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               <p className="text-xl text-gray-600 dark:text-gray-400 mb-4">
                 {article.description}
               </p>
-              <time className="text-sm text-gray-500 dark:text-gray-500">
-                {new Date(article.date).toLocaleDateString('vi-VN', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
-              </time>
+              <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-500">
+                <time>
+                  📅 {new Date(article.date).toLocaleDateString('vi-VN', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </time>
+                <ViewCount slug={article.slug} />
+              </div>
             </header>
 
             {/* Article Content */}

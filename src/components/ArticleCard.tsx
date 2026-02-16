@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ArticleMetadata } from '@/types/article'
+import ViewCount from './ViewCount'
 
 interface ArticleCardProps {
   article: ArticleMetadata
@@ -21,13 +22,16 @@ export default function ArticleCard({ article }: ArticleCardProps) {
           {article.description}
         </p>
         <div className="flex items-center justify-between">
-          <time className="text-sm text-gray-500 dark:text-gray-500 font-medium">
-            {new Date(article.date).toLocaleDateString('vi-VN', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
-          </time>
+          <div className="flex items-center gap-4">
+            <time className="text-sm text-gray-500 dark:text-gray-500 font-medium">
+              📅 {new Date(article.date).toLocaleDateString('vi-VN', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </time>
+            <ViewCount slug={article.slug} showIcon={true} />
+          </div>
           <span className="text-brand-600 dark:text-brand-400 text-sm font-semibold group-hover:translate-x-1 transition-transform inline-flex items-center">
             Đọc thêm →
           </span>

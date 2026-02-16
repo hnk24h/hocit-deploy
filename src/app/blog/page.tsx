@@ -2,6 +2,8 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { getAllArticlesMetadata } from '@/lib/articles'
 import { getCategories } from '@/lib/categories'
+import CategoryList from '@/components/CategoryList'
+import PopularPosts from '@/components/PopularPosts'
 
 export const metadata: Metadata = {
   title: 'Blog - Chia sẻ kiến thức lập trình và công nghệ',
@@ -84,36 +86,38 @@ export default function BlogPage() {
           <aside className="lg:col-span-3">
             <div className="sticky top-24 space-y-6">
               {/* Categories */}
-              <div className="bg-white dark:bg-gray-800 rounded-card shadow-elevation-2 p-6 border border-gray-200 dark:border-gray-700">
-                <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                  🏷️ Chủ đề
-                </h2>
-                <div className="space-y-2">
-                  <Link
-                    href="/blog"
-                    className="block px-4 py-2 rounded-lg bg-brand-50 dark:bg-brand-900/20 text-brand-700 dark:text-brand-300 font-medium hover:bg-brand-100 dark:hover:bg-brand-900/30 transition-colors"
-                  >
-                    📚 Tất cả ({articles.length})
-                  </Link>
-                  {categories.map((category) => {
-                    const count = articles.filter(a => a.category === category.slug).length
-                    return (
-                      <Link
-                        key={category.slug}
-                        href={`/categories/${category.slug}`}
-                        className="block px-4 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                      >
-                        <span className="flex justify-between items-center">
-                          <span>
-                            {category.icon} {category.name}
-                          </span>
-                          <span className="text-sm text-gray-500 dark:text-gray-400">
-                            {count}
-                          </span>
-                        </span>
-                      </Link>
-                    )
-                  })}
+              <div className="relative group/sidebar overflow-hidden bg-white dark:bg-gray-800 rounded-2xl shadow-elevation-2 border border-gray-200 dark:border-gray-700">
+                <div className="absolute inset-0 bg-gradient-to-br from-brand-500/5 to-purple-500/5 opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                <div className="relative p-6">
+                  <div className="flex items-center gap-2 mb-5">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-purple-500 flex items-center justify-center shadow-lg">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                      </svg>
+                    </div>
+                    <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+                      Chủ đề
+                    </h2>
+                  </div>
+                  <CategoryList categories={categories} articles={articles} />
+                </div>
+              </div>
+
+              {/* Popular Posts */}
+              <div className="relative group/sidebar overflow-hidden bg-white dark:bg-gray-800 rounded-2xl shadow-elevation-2 border border-gray-200 dark:border-gray-700">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                <div className="relative p-6">
+                  <div className="flex items-center gap-2 mb-5">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                      </svg>
+                    </div>
+                    <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+                      Bài viết nổi bật
+                    </h2>
+                  </div>
+                  <PopularPosts limit={5} />
                 </div>
               </div>
 
