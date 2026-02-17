@@ -62,7 +62,30 @@ export default function AdUnit({
 }: AdUnitProps) {
   const adRef = useRef<HTMLModElement>(null);
   const isProduction = process.env.NODE_ENV === 'production';
+  // Explicitly check for 'true' string, default to false if not set
   const adsEnabled = process.env.NEXT_PUBLIC_ADS_ENABLED === 'true';
+
+  // Don't render ads if disabled (even in production)
+  if (!adsEnabled) {
+    if (!showPlaceholder) return null;
+    
+    // Show disabled placeholder
+    return (
+      <div
+        className={`ad-placeholder border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg flex items-center justify-center bg-gray-100 dark:bg-gray-800 ${className}`}
+        style={{
+          width: '100%',
+          minHeight: 100,
+        }}
+      >
+        <div className="text-center p-4">
+          <div className="text-xs text-gray-500 dark:text-gray-600">
+            Ads Disabled
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   useEffect(() => {
     if (!isProduction || !adsEnabled) return;
