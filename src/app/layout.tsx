@@ -4,6 +4,7 @@ import './globals.css'
 import './prism-tomorrow.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import MobileBottomNav from '@/components/MobileBottomNav'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import { StructuredData } from '@/components/StructuredData'
 import AdSenseScript from '@/components/ads/AdSenseScript'
@@ -63,12 +64,13 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen pb-16 lg:pb-0">
           <Header />
           <main id="main-content" className="flex-grow">
             {children}
           </main>
           <Footer />
+          <MobileBottomNav />
         </div>
       </body>
     </html>

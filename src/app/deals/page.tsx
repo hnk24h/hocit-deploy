@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { getActiveDeals } from '@/lib/affiliate';
 import { DealBadge, AffiliateButton } from '@/components/affiliate';
 import NewsletterForm from '@/components/NewsletterForm';
+import { HiFire, HiEnvelope, HiGift } from 'react-icons/hi2';
+import { BiDiamond } from 'react-icons/bi';
 
 export const metadata: Metadata = {
   title: 'Deals & Coupons | Hocit Blog',
@@ -21,8 +23,9 @@ export default function DealsPage() {
       <div className="container mx-auto px-4 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="inline-block bg-gradient-to-r from-red-500 to-pink-500 text-white px-6 py-2 rounded-full font-bold text-sm mb-4">
-            🔥 HOT DEALS
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-red-500 to-pink-500 text-white px-6 py-2 rounded-full font-bold text-sm mb-4">
+            <HiFire className="w-5 h-5" />
+            <span>HOT DEALS</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             Deals & Mã giảm giá
@@ -145,16 +148,22 @@ export default function DealsPage() {
           </div>
 
           {/* Floating Icons */}
-          <div className="absolute top-6 left-6 text-4xl opacity-20 animate-bounce">📧</div>
-          <div className="absolute top-10 right-10 text-4xl opacity-20 animate-bounce" style={{ animationDelay: '0.5s' }}>🎁</div>
-          <div className="absolute bottom-6 left-1/3 text-4xl opacity-20 animate-bounce" style={{ animationDelay: '1s' }}>💎</div>
+          <div className="absolute top-6 left-6 text-4xl opacity-20 animate-bounce">
+            <HiEnvelope className="w-10 h-10" />
+          </div>
+          <div className="absolute top-10 right-10 text-4xl opacity-20 animate-bounce" style={{ animationDelay: '0.5s' }}>
+            <HiGift className="w-10 h-10" />
+          </div>
+          <div className="absolute bottom-6 left-1/3 text-4xl opacity-20 animate-bounce" style={{ animationDelay: '1s' }}>
+            <BiDiamond className="w-10 h-10" />
+          </div>
 
           <div className="relative max-w-4xl mx-auto">
             {/* Header Content */}
             <div className="text-center mb-10">
               {/* Badge */}
               <div className="inline-flex items-center gap-2 bg-white dark:bg-gray-800 px-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 shadow-lg mb-6">
-                <span className="text-xl">🔥</span>
+                <HiFire className="w-6 h-6" />
                 <span className="font-semibold text-gray-700 dark:text-gray-300">Nhận deal hot ngay khi ra mắt</span>
               </div>
 

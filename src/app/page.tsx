@@ -8,6 +8,32 @@ import ADS_CONFIG from '@/config/ads.config'
 import Link from 'next/link'
 import Image from 'next/image'
 import type { Metadata } from 'next'
+import { 
+  HiShoppingBag, 
+  HiFire, 
+  HiComputerDesktop,
+  HiAcademicCap,
+  HiSparkles,
+  HiNewspaper,
+  HiCube,
+  HiShoppingCart,
+  HiDevicePhoneMobile,
+  HiQueueList,
+  HiBolt,
+  HiWrench,
+  HiGlobeAlt,
+  HiChartBar,
+  HiArrowTrendingUp,
+  HiEnvelope,
+  HiGift,
+  HiCheckCircle,
+  HiEnvelopeOpen,
+  HiBell,
+  HiCurrencyDollar,
+  HiLockClosed,
+  HiRocketLaunch
+} from 'react-icons/hi2'
+import { BiPalette, BiDiamond } from 'react-icons/bi'
 
 export const metadata: Metadata = {
   title: 'Affiliate Hub - Khám phá sản phẩm tốt nhất & Deals hot | Hocit',
@@ -71,7 +97,7 @@ export default function Page() {
           <div className="text-center text-white space-y-6">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30 animate-fade-in">
-              <span className="text-2xl">🎯</span>
+              <HiSparkles className="w-6 h-6" />
               <span className="font-semibold">Top #1 Affiliate Hub Việt Nam</span>
             </div>
 
@@ -92,30 +118,32 @@ export default function Page() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
               <Link
                 href="/products"
-                className="px-8 py-4 bg-white text-brand-600 rounded-button font-bold text-lg shadow-elevation-3 hover:shadow-elevation-4 hover:scale-105 transition-all touch-target"
+                className="px-8 py-4 bg-white text-brand-600 rounded-button font-bold text-lg shadow-elevation-3 hover:shadow-elevation-4 hover:scale-105 transition-all touch-target flex items-center gap-2"
               >
-                🛍️ Khám phá sản phẩm
+                <HiShoppingBag className="w-6 h-6" />
+                <span>Khám phá sản phẩm</span>
               </Link>
               <Link
                 href="/deals"
-                className="px-8 py-4 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-button font-bold text-lg shadow-elevation-3 hover:shadow-elevation-4 hover:scale-105 transition-all touch-target"
+                className="px-8 py-4 bg-red-500 hover:bg-red-600 text-white rounded-button font-bold text-lg shadow-elevation-3 hover:shadow-elevation-4 hover:scale-105 transition-all touch-target flex items-center gap-2"
               >
-                🔥 Xem Deals hot
+                <HiFire className="w-6 h-6" />
+                <span>Xem Deals hot</span>
               </Link>
             </div>
 
             {/* Trust Indicators */}
             <div className="flex flex-wrap justify-center gap-8 pt-8 text-white/80">
               <div className="flex items-center gap-2">
-                <span className="text-2xl">✅</span>
+                <HiCheckCircle className="w-6 h-6" />
                 <span>Review trung thực</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-2xl">🎁</span>
+                <HiGift className="w-6 h-6" />
                 <span>Deals độc quyền</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-2xl">💰</span>
+                <HiCurrencyDollar className="w-6 h-6" />
                 <span>Tiết kiệm tối đa</span>
               </div>
             </div>
@@ -159,8 +187,9 @@ export default function Page() {
       <section className="py-16 bg-gradient-to-b from-blue-50 to-white dark:from-blue-900/10 dark:to-gray-900">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              🗂️ Danh mục phổ biến
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4 flex items-center justify-center gap-3">
+              <HiQueueList className="w-10 h-10" />
+              <span>Danh mục phổ biến</span>
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300">
               Khám phá sản phẩm theo từng danh mục
@@ -169,15 +198,17 @@ export default function Page() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { name: 'Laptop', icon: '💻', href: '/products?category=laptop', count: '50+' },
-              { name: 'Khóa học', icon: '📚', href: '/products?category=course', count: '30+' },
-              { name: 'Software', icon: '⚡', href: '/products?category=software', count: '40+' },
-              { name: 'Công cụ Dev', icon: '🛠️', href: '/products?category=tools', count: '25+' },
-              { name: 'Hosting', icon: '🌐', href: '/products?category=hosting', count: '15+' },
-              { name: 'Design', icon: '🎨', href: '/products?category=design', count: '20+' },
-              { name: 'Marketing', icon: '📊', href: '/products?category=marketing', count: '18+' },
-              { name: 'Amazon', icon: '📦', href: '/blog?category=amazon', count: 'New' },
-            ].map((category) => (
+              { name: 'Laptop', icon: HiComputerDesktop, href: '/products?category=laptop', count: '50+' },
+              { name: 'Khóa học', icon: HiAcademicCap, href: '/products?category=course', count: '30+' },
+              { name: 'Software', icon: HiBolt, href: '/products?category=software', count: '40+' },
+              { name: 'Công cụ Dev', icon: HiWrench, href: '/products?category=tools', count: '25+' },
+              { name: 'Hosting', icon: HiGlobeAlt, href: '/products?category=hosting', count: '15+' },
+              { name: 'Design', icon: BiPalette, href: '/products?category=design', count: '20+' },
+              { name: 'Marketing', icon: HiChartBar, href: '/products?category=marketing', count: '18+' },
+              { name: 'Amazon', icon: HiCube, href: '/blog?category=amazon', count: 'New' },
+            ].map((category) => {
+              const IconComponent = category.icon
+              return (
               <Link
                 key={category.name}
                 href={category.href}
@@ -186,14 +217,14 @@ export default function Page() {
                 <div className="absolute top-2 right-2 text-xs font-semibold text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-900/30 px-2 py-1 rounded">
                   {category.count}
                 </div>
-                <div className="text-4xl mb-2 group-hover:scale-110 transition-transform">
-                  {category.icon}
+                <div className="text-4xl mb-2 group-hover:scale-110 transition-transform flex items-center justify-center">
+                  <IconComponent className="w-10 h-10" />
                 </div>
                 <div className="font-semibold text-gray-900 dark:text-white">
                   {category.name}
                 </div>
               </Link>
-            ))}
+            )})}
           </div>
 
           <div className="text-center mt-8">
@@ -216,7 +247,8 @@ export default function Page() {
           <div className="max-w-7xl mx-auto px-4">
             <div className="text-center mb-12">
               <div className="inline-flex items-center gap-2 bg-gradient-to-r from-red-500 to-pink-500 text-white px-6 py-2 rounded-full font-bold text-sm mb-4 badge-hot">
-                🔥 HOT DEALS
+                <HiFire className="w-5 h-5" />
+                <span>HOT DEALS</span>
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
                 Deals đang hot nhất hôm nay
@@ -321,7 +353,7 @@ export default function Page() {
                   {/* Quick Stats Card */}
                   <div className="bg-gradient-to-br from-brand-500 to-purple-600 rounded-2xl shadow-elevation-3 p-6 text-white">
                     <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
-                      <span>📊</span>
+                      <HiChartBar className="w-5 h-5" />
                       <span>Thống kê nhanh</span>
                     </h3>
                     <div className="space-y-3">
@@ -360,7 +392,9 @@ export default function Page() {
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className="card p-8 text-center">
-              <div className="text-5xl mb-4">🎯</div>
+              <div className="text-5xl mb-4 flex items-center justify-center">
+                <HiArrowTrendingUp className="w-16 h-16" />
+              </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
                 Review trung thực
               </h3>
@@ -371,7 +405,9 @@ export default function Page() {
             </div>
 
             <div className="card p-8 text-center">
-              <div className="text-5xl mb-4">💰</div>
+              <div className="text-5xl mb-4 flex items-center justify-center">
+                <HiCurrencyDollar className="w-16 h-16" />
+              </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
                 Tiết kiệm tối đa
               </h3>
@@ -382,7 +418,9 @@ export default function Page() {
             </div>
 
             <div className="card p-8 text-center">
-              <div className="text-5xl mb-4">🔒</div>
+              <div className="text-5xl mb-4 flex items-center justify-center">
+                <HiLockClosed className="w-16 h-16" />
+              </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
                 An toàn & Uy tín
               </h3>
@@ -399,8 +437,9 @@ export default function Page() {
       <section className="py-16 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              📝 Bài viết & Review mới nhất
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4 flex items-center justify-center gap-3">
+              <HiNewspaper className="w-10 h-10" />
+              <span>Bài viết & Review mới nhất</span>
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300">
               Đánh giá sản phẩm từ Amazon, Rakuten, Shopee - Deals hot nhất
@@ -420,7 +459,9 @@ export default function Page() {
                 </>
               ) : (
                 <div className="text-center py-12">
-                  <div className="text-6xl mb-4">📝</div>
+                  <div className="text-6xl mb-4 flex items-center justify-center">
+                    <HiNewspaper className="w-20 h-20" />
+                  </div>
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                     Sắp có bài viết mới!
                   </h3>
@@ -471,28 +512,32 @@ export default function Page() {
                 {/* Popular Categories Widget */}
                 <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-elevation-2 border border-gray-200 dark:border-gray-700 p-6">
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                    <span>🔥</span>
+                    <HiFire className="w-5 h-5" />
                     <span>Danh mục hot</span>
                   </h3>
                   <div className="space-y-2">
                     {[
-                      { name: 'Amazon', icon: '📦', href: '/blog?category=amazon' },
-                      { name: 'Rakuten', icon: '🛍️', href: '/blog?category=rakuten' },
-                      { name: 'Shopee', icon: '🛒', href: '/blog?category=shopee' },
-                      { name: 'Laptop', icon: '💻', href: '/products?category=laptop' },
-                    ].map((cat) => (
+                      { name: 'Amazon', icon: HiCube, href: '/blog?category=amazon' },
+                      { name: 'Rakuten', icon: HiShoppingBag, href: '/blog?category=rakuten' },
+                      { name: 'Shopee', icon: HiShoppingCart, href: '/blog?category=shopee' },
+                      { name: 'Laptop', icon: HiComputerDesktop, href: '/products?category=laptop' },
+                    ].map((cat) => {
+                      const IconComponent = cat.icon
+                      return (
                       <Link
                         key={cat.name}
                         href={cat.href}
                         className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors group"
                       >
-                        <span className="text-2xl group-hover:scale-110 transition-transform">{cat.icon}</span>
+                        <span className="text-2xl group-hover:scale-110 transition-transform flex items-center">
+                          <IconComponent className="w-6 h-6" />
+                        </span>
                         <span className="font-medium text-gray-700 dark:text-gray-300">{cat.name}</span>
                         <svg className="w-4 h-4 ml-auto text-gray-400 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                       </Link>
-                    ))}
+                    )})}
                   </div>
                 </div>
               </div>
@@ -510,17 +555,25 @@ export default function Page() {
         </div>
 
         {/* Floating Icons */}
-        <div className="absolute top-10 left-10 text-5xl opacity-20 animate-bounce">📧</div>
-        <div className="absolute top-20 right-10 text-5xl opacity-20 animate-bounce" style={{ animationDelay: '0.5s' }}>🎁</div>
-        <div className="absolute bottom-10 left-1/3 text-5xl opacity-20 animate-bounce" style={{ animationDelay: '1s' }}>💎</div>
-        <div className="absolute bottom-20 right-1/3 text-5xl opacity-20 animate-bounce" style={{ animationDelay: '1.5s' }}>⚡</div>
+        <div className="absolute top-10 left-10 text-5xl opacity-20 animate-bounce">
+          <HiEnvelope className="w-12 h-12" />
+        </div>
+        <div className="absolute top-20 right-10 text-5xl opacity-20 animate-bounce" style={{ animationDelay: '0.5s' }}>
+          <HiGift className="w-12 h-12" />
+        </div>
+        <div className="absolute bottom-10 left-1/3 text-5xl opacity-20 animate-bounce" style={{ animationDelay: '1s' }}>
+          <BiDiamond className="w-12 h-12" />
+        </div>
+        <div className="absolute bottom-20 right-1/3 text-5xl opacity-20 animate-bounce" style={{ animationDelay: '1.5s' }}>
+          <HiBolt className="w-12 h-12" />
+        </div>
 
         <div className="relative max-w-5xl mx-auto px-4">
           {/* Header Content */}
           <div className="text-center mb-12">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 bg-white dark:bg-gray-800 px-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 shadow-lg mb-6">
-              <span className="text-xl">🔔</span>
+              <HiBell className="w-5 h-5" />
               <span className="font-semibold text-gray-700 dark:text-gray-300">8,500+ người đã đăng ký</span>
             </div>
 
@@ -539,8 +592,8 @@ export default function Page() {
             {/* Benefits Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto mb-12">
               <div className="flex items-center gap-3 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-md">
-                <div className="flex-shrink-0 w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center text-2xl">
-                  💰
+                <div className="flex-shrink-0 w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center">
+                  <HiCurrencyDollar className="w-7 h-7" />
                 </div>
                 <div className="text-left">
                   <div className="font-bold text-gray-900 dark:text-white">Tiết kiệm $50+</div>
@@ -548,8 +601,8 @@ export default function Page() {
                 </div>
               </div>
               <div className="flex items-center gap-3 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-md">
-                <div className="flex-shrink-0 w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center text-2xl">
-                  🎯
+                <div className="flex-shrink-0 w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                  <HiArrowTrendingUp className="w-7 h-7" />
                 </div>
                 <div className="text-left">
                   <div className="font-bold text-gray-900 dark:text-white">Deals độc quyền</div>
@@ -557,8 +610,8 @@ export default function Page() {
                 </div>
               </div>
               <div className="flex items-center gap-3 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-md">
-                <div className="flex-shrink-0 w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center text-2xl">
-                  📬
+                <div className="flex-shrink-0 w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
+                  <HiEnvelopeOpen className="w-7 h-7" />
                 </div>
                 <div className="text-left">
                   <div className="font-bold text-gray-900 dark:text-white">Mỗi thứ 2</div>
@@ -613,15 +666,21 @@ export default function Page() {
         </div>
 
         {/* Floating Elements */}
-        <div className="absolute top-10 left-10 text-6xl opacity-20 animate-bounce">💰</div>
-        <div className="absolute top-20 right-20 text-6xl opacity-20 animate-bounce" style={{ animationDelay: '0.5s' }}>🎁</div>
-        <div className="absolute bottom-10 left-1/4 text-6xl opacity-20 animate-bounce" style={{ animationDelay: '1s' }}>⚡</div>
+        <div className="absolute top-10 left-10 text-6xl opacity-20 animate-bounce">
+          <HiCurrencyDollar className="w-16 h-16" />
+        </div>
+        <div className="absolute top-20 right-20 text-6xl opacity-20 animate-bounce" style={{ animationDelay: '0.5s' }}>
+          <HiGift className="w-16 h-16" />
+        </div>
+        <div className="absolute bottom-10 left-1/4 text-6xl opacity-20 animate-bounce" style={{ animationDelay: '1s' }}>
+          <HiBolt className="w-16 h-16" />
+        </div>
 
         <div className="relative max-w-6xl mx-auto px-4">
           {/* Badge */}
           <div className="text-center mb-6">
             <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30 text-white">
-              <span className="text-xl">🚀</span>
+              <HiRocketLaunch className="w-6 h-6" />
               <span className="font-semibold">Tham gia cộng đồng 10,000+ thành viên</span>
             </div>
           </div>
@@ -662,7 +721,7 @@ export default function Page() {
           <div className="grid md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
             <div className="flex items-start gap-3 text-white">
               <div className="flex-shrink-0 w-8 h-8 bg-yellow-300 rounded-full flex items-center justify-center text-brand-600">
-                ✓
+                <HiCheckCircle className="w-5 h-5" />
               </div>
               <div>
                 <div className="font-semibold mb-1">Review trung thực</div>
@@ -671,7 +730,7 @@ export default function Page() {
             </div>
             <div className="flex items-start gap-3 text-white">
               <div className="flex-shrink-0 w-8 h-8 bg-yellow-300 rounded-full flex items-center justify-center text-brand-600">
-                ✓
+                <HiCheckCircle className="w-5 h-5" />
               </div>
               <div>
                 <div className="font-semibold mb-1">Deals độc quyền</div>
@@ -680,7 +739,7 @@ export default function Page() {
             </div>
             <div className="flex items-start gap-3 text-white">
               <div className="flex-shrink-0 w-8 h-8 bg-yellow-300 rounded-full flex items-center justify-center text-brand-600">
-                ✓
+                <HiCheckCircle className="w-5 h-5" />
               </div>
               <div>
                 <div className="font-semibold mb-1">Miễn phí 100%</div>
@@ -695,7 +754,8 @@ export default function Page() {
               href="/products"
               className="group px-10 py-5 bg-white text-brand-600 rounded-button font-bold text-lg shadow-2xl hover:shadow-[0_20px_50px_rgba(255,255,255,0.3)] hover:scale-105 transition-all duration-300 flex items-center gap-3"
             >
-              <span>🎯 Khám phá ngay</span>
+              <HiArrowTrendingUp className="w-6 h-6" />
+              <span>Khám phá ngay</span>
               <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
@@ -704,7 +764,8 @@ export default function Page() {
               href="/deals"
               className="group px-10 py-5 bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 rounded-button font-bold text-lg shadow-2xl hover:shadow-[0_20px_50px_rgba(251,191,36,0.4)] hover:scale-105 transition-all duration-300 flex items-center gap-3"
             >
-              <span>🔥 Xem Deals hot</span>
+              <HiFire className="w-6 h-6" />
+              <span>Xem Deals hot</span>
               <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
@@ -734,11 +795,20 @@ export default function Page() {
                 <span>4.9/5 rating</span>
               </div>
               <div>•</div>
-              <div>🔒 An toàn & bảo mật</div>
+              <div className="flex items-center gap-2">
+                <HiLockClosed className="w-5 h-5 text-white/80" />
+                <span>An toàn & bảo mật</span>
+              </div>
               <div>•</div>
-              <div>✅ Đánh giá 2,000+ reviews</div>
+              <div className="flex items-center gap-2">
+                <HiCheckCircle className="w-5 h-5 text-white/80" />
+                <span>Đánh giá 2,000+ reviews</span>
+              </div>
               <div>•</div>
-              <div>📱 Hỗ trợ 24/7</div>
+              <div className="flex items-center gap-2">
+                <HiDevicePhoneMobile className="w-5 h-5 text-white/80" />
+                <span>Hỗ trợ 24/7</span>
+              </div>
             </div>
           </div>
         </div>

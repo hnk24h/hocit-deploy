@@ -1,210 +1,226 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import ThemeToggle from './ThemeToggle'
 import Logo from './Logo'
+import SearchBar from './SearchBar'
 import { useState, useEffect, useRef } from 'react'
+import { 
+  HiNewspaper,
+  HiShoppingBag,
+  HiFire,
+  HiInformationCircle,
+  HiChevronDown,
+  HiBars3,
+  HiXMark,
+  HiBookOpen,
+  HiComputerDesktop,
+  HiAdjustmentsHorizontal
+} from 'react-icons/hi2'
 
 export default function Header() {
+  const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [resourcesOpen, setResourcesOpen] = useState(false)
-  const [currentTime, setCurrentTime] = useState('')
-  const dropdownRef = useRef<HTMLLIElement>(null)
+  const [aboutMenuOpen, setAboutMenuOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
-
-  // Update time every minute
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date()
-      const month = String(now.getMonth() + 1).padStart(2, '0')
-      const day = String(now.getDate()).padStart(2, '0')
-      const hours = String(now.getHours()).padStart(2, '0')
-      const minutes = String(now.getMinutes()).padStart(2, '0')
-      const seconds = String(now.getSeconds()).padStart(2, '0')
-      setCurrentTime(`${month}/${day} ${hours}:${minutes}:${seconds}`)
-    }
-
-    updateTime() // Initial update
-    const interval = setInterval(updateTime, 1000) // Update every second
-
-    return () => clearInterval(interval)
-  }, [])
 
   // Handle click outside to close dropdown
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setResourcesOpen(false)
+        setAboutMenuOpen(false)
       }
     }
 
-    if (resourcesOpen) {
+    if (aboutMenuOpen) {
       document.addEventListener('mousedown', handleClickOutside)
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
-  }, [resourcesOpen])
+  }, [aboutMenuOpen])
 
   // Keyboard navigation for dropdown
   const handleDropdownKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Escape') {
-      setResourcesOpen(false)
+      setAboutMenuOpen(false)
       buttonRef.current?.focus()
-    } else if (e.key === 'ArrowDown' && !resourcesOpen) {
+    } else if (e.key === 'ArrowDown' && !aboutMenuOpen) {
       e.preventDefault()
-      setResourcesOpen(true)
+      setAboutMenuOpen(true)
     }
   }
 
   return (
     <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-elevation-2 sticky top-0 z-50 border-b border-gray-100 dark:border-gray-800">
-      <nav className="max-w-7xl mx-auto px-4 py-4">
-        <div className="flex justify-between items-center">
-          {/* Logo */}
-          <Logo size="md" showText={true} />
+      {/* Schema.org Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'SiteNavigationElement',
+            'name': 'Main Navigation',
+            'hasPart': [
+              { '@type': 'WebPage', 'name': 'Blog', 'url': `${process.env.NEXT_PUBLIC_SITE_URL || 'https://hocit.vn'}/blog` },
+              { '@type': 'WebPage', 'name': 'Sản phẩm', 'url': `${process.env.NEXT_PUBLIC_SITE_URL || 'https://hocit.vn'}/products` },
+              { '@type': 'WebPage', 'name': 'Deals', 'url': `${process.env.NEXT_PUBLIC_SITE_URL || 'https://hocit.vn'}/deals` },
+            ],
+          }),
+        }}
+      />
+      
+      <nav className="max-w-7xl mx-auto px-4 py-3.5" role="navigation" aria-label="Main navigation">
+        <div className="flex justify-between items-center gap-4">
+          {/* Logo - Compact */}
+          <div className="flex-shrink-0">
+            <Logo size="md" showText={true} />
+          </div>
           
-          {/* Desktop Menu */}
-          <div className="hidden lg:flex items-center gap-6">
-            <ul className="flex items-center space-x-6">
-              <li>
-                <Link 
-                  href="/" 
-                  className="text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors relative link-underline"
-                >
-                  Trang chủ
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  href="/blog" 
-                  className="text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors relative link-underline"
-                >
-                  📝 Blog
-                </Link>
-              </li>
-              {/* Products - Affiliate */}
-              <li>
-                <Link 
-                  href="/products" 
-                  className="text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors relative link-underline"
-                >
-                  🛍️ Sản phẩm
-                </Link>
-              </li>
+          {/* Desktop Search Bar - Primary Focus */}
+          <div className="hidden lg:flex lg:flex-1 lg:max-w-5xl">
+            <SearchBar />
+          </div>
+          
+          {/* Desktop Menu - Modern Inline Style */}
+          <div className="hidden lg:flex items-center gap-4">
+            <nav className="flex items-center space-x-5" aria-label="Primary navigation">
+              <Link 
+                href="/blog" 
+                className={`flex items-center gap-1.5 text-sm font-medium transition-colors relative group hover:text-brand-600 dark:hover:text-brand-400 ${
+                  pathname?.startsWith('/blog') || pathname?.startsWith('/articles') 
+                    ? 'text-brand-600 dark:text-brand-400' 
+                    : 'text-gray-700 dark:text-gray-300'
+                }`}
+              >
+                <HiNewspaper className="w-4 h-4" />
+                <span>Blog</span>
+                {(pathname?.startsWith('/blog') || pathname?.startsWith('/articles')) && (
+                  <span className="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-brand-600 dark:bg-brand-400 rounded-full" />
+                )}
+              </Link>
               
-              {/* Deals - Highlighted */}
-              <li>
-                <Link 
-                  href="/deals" 
-                  className="relative text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors flex items-center gap-2"
-                >
-                  🔥 Deals
-                  <span className="badge-hot">
-                    HOT
-                  </span>
-                </Link>
-              </li>
+              <Link 
+                href="/products" 
+                className={`flex items-center gap-1.5 text-sm font-medium transition-colors relative group hover:text-brand-600 dark:hover:text-brand-400 ${
+                  pathname?.startsWith('/products') 
+                    ? 'text-brand-600 dark:text-brand-400' 
+                    : 'text-gray-700 dark:text-gray-300'
+                }`}
+              >
+                <HiShoppingBag className="w-4 h-4" />
+                <span>Sản phẩm</span>
+                {pathname?.startsWith('/products') && (
+                  <span className="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-brand-600 dark:bg-brand-400 rounded-full" />
+                )}
+              </Link>
+              
+              {/* Deals - CTA Button */}
+              <Link 
+                href="/deals" 
+                className={`relative px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all flex items-center gap-1.5 ${
+                  pathname === '/deals'
+                    ? 'bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-elevation-3 scale-105'
+                    : 'bg-gradient-to-r from-red-50 to-pink-50 dark:from-red-900/20 dark:to-pink-900/20 text-red-600 dark:text-red-400 hover:shadow-elevation-2 hover:scale-105'
+                }`}
+              >
+                <HiFire className="w-4 h-4" />
+                <span>Deals</span>
+                <span className="animate-pulse text-[10px] font-bold">HOT</span>
+              </Link>
 
-              {/* Resources Dropdown */}
-              <li className="relative" ref={dropdownRef}>
+              {/* About + Resources Dropdown */}
+              <div className="relative" ref={dropdownRef}>
                 <button
                   ref={buttonRef}
-                  onClick={() => setResourcesOpen(!resourcesOpen)}
+                  onClick={() => setAboutMenuOpen(!aboutMenuOpen)}
                   onKeyDown={handleDropdownKeyDown}
-                  className="flex items-center gap-1 text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors touch-target"
-                  aria-expanded={resourcesOpen}
+                  className={`flex items-center gap-1.5 text-sm font-medium transition-colors touch-target hover:text-brand-600 dark:hover:text-brand-400 ${
+                    pathname === '/about' || pathname === '/library' || pathname === '/best-laptops' || pathname === '/laptop-comparison' 
+                      ? 'text-brand-600 dark:text-brand-400' 
+                      : 'text-gray-700 dark:text-gray-300'
+                  }`}
+                  aria-expanded={aboutMenuOpen}
                   aria-haspopup="true"
-                  aria-label="Resources menu"
+                  aria-label="About menu"
                 >
-                  Tài nguyên
-                  <svg 
-                    className={`w-4 h-4 transition-transform ${resourcesOpen ? 'rotate-180' : ''}`} 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
+                  <HiInformationCircle className="w-4 h-4" />
+                  <span>Về chúng tôi</span>
+                  <HiChevronDown className={`w-4 h-4 transition-transform ${aboutMenuOpen ? 'rotate-180' : ''}`} />
                 </button>
                 
                 {/* Dropdown Menu */}
                 <div 
-                  className={`absolute top-full left-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-card shadow-elevation-4 border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-200 ${resourcesOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+                  className={`absolute top-full right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-card shadow-elevation-4 border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-200 ${aboutMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
                   role="menu"
                   aria-orientation="vertical"
                 >
                   <div className="py-2">
                     <Link 
-                      href="/library"
-                      className="block px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                      href="/about"
+                      className="flex items-center gap-2 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-semibold"
                       role="menuitem"
-                      onClick={() => setResourcesOpen(false)}
+                      onClick={() => setAboutMenuOpen(false)}
                     >
-                      📚 Thư viện
+                      <HiInformationCircle className="w-4 h-4" />
+                      <span>Về Chúng Tôi</span>
+                    </Link>
+                    <div className="border-t border-gray-200 dark:border-gray-700 my-1"></div>
+                    <div className="px-4 py-1.5 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      Tài nguyên
+                    </div>
+                    <Link 
+                      href="/library"
+                      className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                      role="menuitem"
+                      onClick={() => setAboutMenuOpen(false)}
+                    >
+                      <HiBookOpen className="w-4 h-4" />
+                      <span>Thư viện</span>
                     </Link>
                     <Link 
                       href="/best-laptops"
-                      className="block px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                      className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                       role="menuitem"
-                      onClick={() => setResourcesOpen(false)}
+                      onClick={() => setAboutMenuOpen(false)}
                     >
-                      💻 Best Laptops 2026
+                      <HiComputerDesktop className="w-4 h-4" />
+                      <span>Best Laptops 2026</span>
                     </Link>
                     <Link 
                       href="/laptop-comparison"
-                      className="block px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                      className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                       role="menuitem"
-                      onClick={() => setResourcesOpen(false)}
+                      onClick={() => setAboutMenuOpen(false)}
                     >
-                      ⚖️ Laptop Comparison
+                      <HiAdjustmentsHorizontal className="w-4 h-4" />
+                      <span>Laptop Comparison</span>
                     </Link>
                     <div className="border-t border-gray-200 dark:border-gray-700 my-1"></div>
                     <Link 
                       href="/affiliate-disclosure"
-                      className="block px-4 py-3 text-sm text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                      className="block px-4 py-2.5 text-xs text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                       role="menuitem"
-                      onClick={() => setResourcesOpen(false)}
+                      onClick={() => setAboutMenuOpen(false)}
+                      rel="nofollow"
                     >
                       Affiliate Disclosure
                     </Link>
                   </div>
                 </div>
-              </li>
-
-              <li>
-                <Link 
-                  href="/about" 
-                  className="text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors relative link-underline"
-                >
-                  Về Chúng Tôi
-                </Link>
-              </li>
-            </ul>
+              </div>
+            </nav>
             
-            {/* Clock Display */}
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-lg text-sm font-mono text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span>{currentTime || '00/00 00:00:00'}</span>
-            </div>
-
+            <div className="h-8 w-px bg-gray-200 dark:bg-gray-700"></div>
+            
             <ThemeToggle />
           </div>
 
           {/* Mobile Menu Button */}
           <div className="flex lg:hidden items-center gap-3">
-            {/* Mobile Clock */}
-            <div className="flex items-center gap-1.5 px-2.5 py-1 bg-gray-100 dark:bg-gray-800 rounded-lg text-xs font-mono text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700">
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span className="whitespace-nowrap">{currentTime || '00/00 00:00'}</span>
-            </div>
-            
             <ThemeToggle />
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -212,13 +228,9 @@ export default function Header() {
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <HiXMark className="w-6 h-6" />
               ) : (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
+                <HiBars3 className="w-6 h-6" />
               )}
             </button>
           </div>
@@ -227,87 +239,87 @@ export default function Header() {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="lg:hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-700 pt-4 animate-fadeIn">
+            {/* Mobile Search */}
+            <div className="mb-4">
+              <SearchBar compact={true} />
+            </div>
+            
             <ul className="space-y-3">
-              <li>
-                <Link 
-                  href="/" 
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors py-2"
-                >
-                  Trang chủ
-                </Link>
-              </li>
               <li>
                 <Link 
                   href="/blog" 
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors py-2"
+                  className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors py-2"
                 >
-                  📝 Blog
+                  <HiNewspaper className="w-5 h-5" />
+                  <span>Blog</span>
                 </Link>
               </li>
               <li>
                 <Link 
                   href="/products" 
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors py-2"
+                  className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors py-2"
                 >
-                  🛍️ Sản phẩm
+                  <HiShoppingBag className="w-5 h-5" />
+                  <span>Sản phẩm</span>
                 </Link>
               </li>
               <li>
                 <Link 
                   href="/deals" 
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors py-2"
+                  className="flex items-center gap-2 py-3 px-4 bg-gradient-to-r from-red-50 to-pink-50 dark:from-red-900/20 dark:to-pink-900/20 rounded-xl font-semibold text-red-600 dark:text-red-400 hover:shadow-elevation-2 transition-all"
                 >
-                  <span className="flex items-center gap-2">
-                    🔥 Deals
-                    <span className="badge-hot">
-                      HOT
-                    </span>
+                  <HiFire className="w-5 h-5" />
+                  <span>Deals Hôm Nay</span>
+                  <span className="ml-auto badge-hot text-xs">
+                    HOT
                   </span>
                 </Link>
               </li>
               
-              {/* Resources Section */}
+              {/* About + Resources Section */}
               <li className="border-t border-gray-200 dark:border-gray-700 pt-3">
-                <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 px-2">
-                  Tài nguyên
-                </div>
-                <div className="space-y-2">
-                  <Link 
-                    href="/library" 
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="block text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors py-2 pl-4"
-                  >
-                    📚 Thư viện
-                  </Link>
-                  <Link 
-                    href="/best-laptops" 
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="block text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors py-2 pl-4"
-                  >
-                    💻 Best Laptops 2026
-                  </Link>
-                  <Link 
-                    href="/laptop-comparison" 
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="block text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors py-2 pl-4"
-                  >
-                    ⚖️ Laptop Comparison
-                  </Link>
-                </div>
-              </li>
-
-              <li>
                 <Link 
                   href="/about" 
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors py-2"
+                  className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors py-2"
                 >
-                  Về Chúng Tôi
+                  <HiInformationCircle className="w-5 h-5" />
+                  <span>Về Chúng Tôi</span>
                 </Link>
+                <div className="mt-2">
+                  <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 px-2">
+                    Tài nguyên
+                  </div>
+                  <div className="space-y-2">
+                    <Link 
+                      href="/library" 
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors py-2 pl-4"
+                    >
+                      <HiBookOpen className="w-4 h-4" />
+                      <span>Thư viện</span>
+                    </Link>
+                    <Link 
+                      href="/best-laptops" 
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors py-2 pl-4"
+                    >
+                      <HiComputerDesktop className="w-4 h-4" />
+                      <span>Best Laptops 2026</span>
+                    </Link>
+                    <Link 
+                      href="/laptop-comparison" 
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 font-medium transition-colors py-2 pl-4"
+                    >
+                      <HiAdjustmentsHorizontal className="w-4 h-4" />
+                      <span>Laptop Comparison</span>
+                    </Link>
+                  </div>
+                </div>
               </li>
               
               <li className="pt-3 border-t border-gray-200 dark:border-gray-700">
@@ -315,6 +327,7 @@ export default function Header() {
                   href="/affiliate-disclosure" 
                   onClick={() => setMobileMenuOpen(false)}
                   className="block text-xs text-gray-500 dark:text-gray-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors py-2"
+                  rel="nofollow"
                 >
                   Affiliate Disclosure
                 </Link>

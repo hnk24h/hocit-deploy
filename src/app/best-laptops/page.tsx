@@ -2,6 +2,8 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { getAllProducts } from '@/lib/affiliate';
 import { ProductCard, AffiliateDisclosure } from '@/components/affiliate';
+import { HiTrophy, HiBolt, HiCog } from 'react-icons/hi2';
+import { BiDesktop, BiChip } from 'react-icons/bi';
 
 export const metadata: Metadata = {
   title: 'Best Laptops for Developers 2026 | Hocit Blog',
@@ -48,7 +50,7 @@ export default function BestLaptopsPage() {
         {/* Quick Picks */}
         <div className="mb-16 bg-gradient-to-r from-brand-50 to-blue-50 dark:from-brand-900/20 dark:to-blue-900/20 rounded-2xl p-8">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
-            <span>🏆</span>
+            <HiTrophy className="w-7 h-7" />
             <span>Quick Picks</span>
           </h2>
           <div className="grid md:grid-cols-3 gap-6">
@@ -111,7 +113,8 @@ export default function BestLaptopsPage() {
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-white dark:bg-gray-800 rounded-lg p-6">
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                <span>⚡</span> Hiệu năng
+                <HiBolt className="w-6 h-6" />
+                <span>Hiệu năng</span>
               </h3>
               <ul className="text-gray-600 dark:text-gray-300 space-y-2">
                 <li>CPU: Tối thiểu Intel i7 hoặc equivalent</li>
@@ -122,7 +125,8 @@ export default function BestLaptopsPage() {
             </div>
             <div className="bg-white dark:bg-gray-800 rounded-lg p-6">
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                <span>🖥️</span> Màn hình
+                <BiDesktop className="w-6 h-6" />
+                <span>Màn hình</span>
               </h3>
               <ul className="text-gray-600 dark:text-gray-300 space-y-2">
                 <li>Kích thước: 13-15 inch</li>
@@ -133,7 +137,8 @@ export default function BestLaptopsPage() {
             </div>
             <div className="bg-white dark:bg-gray-800 rounded-lg p-6">
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                <span>🔋</span> Pin
+                <BiChip className="w-6 h-6" />
+                <span>Pin</span>
               </h3>
               <ul className="text-gray-600 dark:text-gray-300 space-y-2">
                 <li>Tối thiểu 8 giờ sử dụng liên tục</li>
@@ -143,7 +148,8 @@ export default function BestLaptopsPage() {
             </div>
             <div className="bg-white dark:bg-gray-800 rounded-lg p-6">
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                <span>⚙️</span> Khác
+                <HiCog className="w-6 h-6" />
+                <span>Khác</span>
               </h3>
               <ul className="text-gray-600 dark:text-gray-300 space-y-2">
                 <li>Bàn phím tốt (typing nhiều)</li>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { HiBookOpen } from 'react-icons/hi2'
 
 interface PDFBook {
   title: string
@@ -85,8 +86,9 @@ export default function LibraryPage() {
       <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-16 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">
-              📚 Thư viện tài liệu
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-3">
+              <HiBookOpen className="w-8 h-8" />
+              <span>Thư viện tài liệu</span>
             </h1>
             <div className="flex gap-2">
               <button

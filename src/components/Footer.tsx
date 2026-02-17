@@ -1,4 +1,20 @@
 import Link from 'next/link'
+import { 
+  HiHome, 
+  HiQueueList, 
+  HiBookOpen, 
+  HiNewspaper,
+  HiHandRaised,
+  HiShoppingBag,
+  HiFire,
+  HiComputerDesktop,
+  HiAdjustmentsHorizontal,
+  HiDocument,
+  HiClipboardDocumentList,
+  HiLockClosed,
+  HiDocumentText,
+  HiEnvelope
+} from 'react-icons/hi2'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -7,30 +23,30 @@ export default function Footer() {
     {
       title: 'Nội dung',
       links: [
-        { label: 'Trang chủ', href: '/', icon: '🏠' },
-        { label: 'Danh mục', href: '/categories', icon: '📑' },
-        { label: 'Thư viện', href: '/library', icon: '📚' },
-        { label: 'Blog', href: '/blog', icon: '✍️' },
-        { label: 'Giới thiệu', href: '/about', icon: '👋' },
+        { label: 'Trang chủ', href: '/', icon: HiHome },
+        { label: 'Danh mục', href: '/categories', icon: HiQueueList },
+        { label: 'Thư viện', href: '/library', icon: HiBookOpen },
+        { label: 'Blog', href: '/blog', icon: HiNewspaper },
+        { label: 'Giới thiệu', href: '/about', icon: HiHandRaised },
       ]
     },
     {
       title: 'Sản phẩm & Deals',
       links: [
-        { label: 'Sản phẩm', href: '/products', icon: '🛍️' },
-        { label: 'Deals HOT', href: '/deals', icon: '🔥' },
-        { label: 'Best Laptops 2026', href: '/best-laptops', icon: '💻' },
-        { label: 'So sánh Laptop', href: '/laptop-comparison', icon: '⚖️' },
-        { label: 'Reader (PDF/Excel)', href: '/reader', icon: '📖' },
+        { label: 'Sản phẩm', href: '/products', icon: HiShoppingBag },
+        { label: 'Deals HOT', href: '/deals', icon: HiFire },
+        { label: 'Best Laptops 2026', href: '/best-laptops', icon: HiComputerDesktop },
+        { label: 'So sánh Laptop', href: '/laptop-comparison', icon: HiAdjustmentsHorizontal },
+        { label: 'Reader (PDF/Excel)', href: '/reader', icon: HiDocument },
       ]
     },
     {
       title: 'Legal & Hỗ trợ',
       links: [
-        { label: 'Affiliate Disclosure', href: '/affiliate-disclosure', icon: '📋' },
-        { label: 'Privacy Policy', href: '/privacy', icon: '🔒' },
-        { label: 'Terms of Service', href: '/terms', icon: '📜' },
-        { label: 'Liên hệ', href: '/contact', icon: '✉️' },
+        { label: 'Affiliate Disclosure', href: '/affiliate-disclosure', icon: HiClipboardDocumentList },
+        { label: 'Privacy Policy', href: '/privacy', icon: HiLockClosed },
+        { label: 'Terms of Service', href: '/terms', icon: HiDocumentText },
+        { label: 'Liên hệ', href: '/contact', icon: HiEnvelope },
       ]
     }
   ]
@@ -116,17 +132,20 @@ export default function Footer() {
                     {section.title}
                   </h4>
                   <ul className="space-y-3">
-                    {section.links.map((link) => (
-                      <li key={link.href}>
-                        <Link
-                          href={link.href}
-                          className="group flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm"
-                        >
-                          <span className="text-base group-hover:scale-110 transition-transform">{link.icon}</span>
-                          <span className="group-hover:translate-x-0.5 transition-transform">{link.label}</span>
-                        </Link>
-                      </li>
-                    ))}
+                    {section.links.map((link) => {
+                      const IconComponent = link.icon
+                      return (
+                        <li key={link.href}>
+                          <Link
+                            href={link.href}
+                            className="group flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm"
+                          >
+                            <IconComponent className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                            <span className="group-hover:translate-x-0.5 transition-transform">{link.label}</span>
+                          </Link>
+                        </li>
+                      )
+                    })}
                   </ul>
                 </div>
               ))}

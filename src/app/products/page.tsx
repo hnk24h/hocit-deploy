@@ -3,6 +3,7 @@ import { getAllProducts } from '@/lib/affiliate';
 import { ProductGrid } from '@/components/affiliate';
 import EmptyState from '@/components/EmptyState';
 import Link from 'next/link';
+import { HiCube } from 'react-icons/hi2';
 
 export const metadata: Metadata = {
   title: 'Sản phẩm được đề xuất | Hocit Blog',
@@ -56,7 +57,7 @@ export default function ProductsPage() {
         {/* Products grid */}
         {products.length === 0 ? (
           <EmptyState
-            icon="📦"
+            icon={<HiCube className="w-20 h-20" />}
             title="Chưa có sản phẩm"
             description="Hiện tại chưa có sản phẩm nào. Hãy quay lại sau nhé!"
             action={{

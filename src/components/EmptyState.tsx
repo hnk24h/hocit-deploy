@@ -1,5 +1,7 @@
+import { HiCube } from 'react-icons/hi2'
+
 interface EmptyStateProps {
-  icon?: string;
+  icon?: React.ReactNode;
   title: string;
   description: string;
   action?: {
@@ -9,14 +11,14 @@ interface EmptyStateProps {
 }
 
 export default function EmptyState({ 
-  icon = '📦', 
+  icon = <HiCube className="w-20 h-20 mx-auto text-gray-400" />, 
   title, 
   description, 
   action 
 }: EmptyStateProps) {
   return (
     <div className="text-center py-16 px-4">
-      <div className="text-7xl mb-6 animate-scale-in">
+      <div className="mb-6 animate-scale-in">
         {icon}
       </div>
       <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">

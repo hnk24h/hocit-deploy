@@ -153,6 +153,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           {headings.length > 0 ? (
             <aside className="hidden lg:block w-64 flex-shrink-0">
               <div className="sticky top-24 space-y-6">
+                {/* Table of Contents */}
+                <TableOfContents headings={headings} />
+                
                 {/* Ad Slot - Article Sidebar (Highest Revenue) */}
                 <div>
                   <AdUnit 
@@ -160,10 +163,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                     size="300x600"
                     className="rounded-2xl overflow-hidden shadow-elevation-2"
                   />
-                </div>
-
-                {/* Table of Contents */}
-                <TableOfContents headings={headings} />
+                </div>                
               </div>
             </aside>
           ) : (
