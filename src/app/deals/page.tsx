@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { getActiveDeals } from '@/lib/affiliate';
 import { DealBadge, AffiliateButton } from '@/components/affiliate';
+import NewsletterForm from '@/components/NewsletterForm';
 
 export const metadata: Metadata = {
   title: 'Deals & Coupons | Hocit Blog',
@@ -135,29 +136,68 @@ export default function DealsPage() {
           </div>
         )}
 
-        {/* Newsletter CTA */}
-        <div className="mt-16 bg-gradient-to-r from-brand-600 to-blue-600 rounded-2xl p-8 md:p-12 text-center text-white">
-          <h2 className="text-3xl font-bold mb-4">
-            📧 Đăng ký nhận thông báo Deal mới
-          </h2>
-          <p className="text-lg mb-6 opacity-90">
-            Nhận thông báo ngay khi có deal hot và mã giảm giá độc quyền
-          </p>
-          <form className="max-w-md mx-auto">
-            <div className="flex gap-2">
-              <input
-                type="email"
-                placeholder="Email của bạn"
-                className="flex-1 px-4 py-3 rounded-lg text-gray-900"
-              />
-              <button
-                type="submit"
-                className="bg-white text-brand-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
-              >
-                Đăng ký
-              </button>
+        {/* Newsletter CTA Section */}
+        <div className="relative bg-gradient-to-br from-emerald-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-16 md:py-20 -mx-4 px-4 mt-16 rounded-2xl overflow-hidden">
+          {/* Background Decorations */}
+          <div className="absolute inset-0 opacity-30">
+            <div className="absolute top-0 left-1/4 w-72 h-72 bg-emerald-200 dark:bg-emerald-900/30 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-200 dark:bg-blue-900/30 rounded-full blur-3xl"></div>
+          </div>
+
+          {/* Floating Icons */}
+          <div className="absolute top-6 left-6 text-4xl opacity-20 animate-bounce">📧</div>
+          <div className="absolute top-10 right-10 text-4xl opacity-20 animate-bounce" style={{ animationDelay: '0.5s' }}>🎁</div>
+          <div className="absolute bottom-6 left-1/3 text-4xl opacity-20 animate-bounce" style={{ animationDelay: '1s' }}>💎</div>
+
+          <div className="relative max-w-4xl mx-auto">
+            {/* Header Content */}
+            <div className="text-center mb-10">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 bg-white dark:bg-gray-800 px-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 shadow-lg mb-6">
+                <span className="text-xl">🔥</span>
+                <span className="font-semibold text-gray-700 dark:text-gray-300">Nhận deal hot ngay khi ra mắt</span>
+              </div>
+
+              {/* Main Heading */}
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4 leading-tight">
+                Đừng bỏ lỡ
+                <span className="block mt-1 bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">
+                  Deals độc quyền mỗi tuần
+                </span>
+              </h2>
+              
+              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-xl mx-auto leading-relaxed">
+                Nhận ngay các deals hot nhất, mã giảm giá đặc biệt và review sản phẩm chi tiết. Hoàn toàn miễn phí!
+              </p>
             </div>
-          </form>
+
+            {/* Newsletter Form */}
+            <NewsletterForm />
+
+            {/* Trust Indicators */}
+            <div className="mt-6 flex flex-wrap justify-center items-center gap-4 text-gray-600 dark:text-gray-400 text-sm">
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span>Miễn phí 100%</span>
+              </div>
+              <div className="hidden md:block">•</div>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span>Không spam</span>
+              </div>
+              <div className="hidden md:block">•</div>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span>Hủy bất cứ lúc nào</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Browse Products CTA */}

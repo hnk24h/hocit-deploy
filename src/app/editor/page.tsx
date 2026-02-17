@@ -27,6 +27,7 @@ function EditorContent() {
   const [previewMode, setPreviewMode] = useState(false) // Toggle between markdown and HTML preview
   const [previewHtml, setPreviewHtml] = useState('')
   const [isProduction, setIsProduction] = useState(false)
+  const [wordCount, setWordCount] = useState(0)
 
   // Check if running in production
   useEffect(() => {
@@ -44,6 +45,22 @@ function EditorContent() {
       loadPost(slug)
     }
   }, [slug])
+
+  // Count words in markdown (excluding code blocks and special syntax)
+  const countWords = (text: string): number => {
+    if (!text) return 0
+    // Remove code blocks
+    const withoutCodeBlocks = text.replace(/```[\s\S]*?```/g, '')
+    // Remove inline code
+    const withoutInlineCode = withoutCodeBlocks.replace(/`[^`]*`/g, '')
+    // Remove markdown links but keep text
+    const withoutLinks = withoutInlineCode.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    // Remove markdown formatting
+    const withoutFormatting = withoutLinks.replace(/[#*_~`>|-]/g, '')
+    // Count words (split by whitespace)
+    const words = withoutFormatting.trim().split(/\s+/).filter(word => word.length > 0)
+    return words.length
+  }
 
   // Auto-generate slug from title
   const generateSlug = (title: string): string => {
@@ -71,12 +88,14 @@ function EditorContent() {
     }
   }
 
-  // Update preview HTML when markdown changes
+  // Update preview HTML and word count when markdown changes
   useEffect(() => {
     if (markdown && previewMode) {
       const html = marked.parse(markdown) as string
       setPreviewHtml(html)
     }
+    // Update word count
+    setWordCount(countWords(markdown))
   }, [markdown, previewMode])
 
   const handlePreview = () => {
@@ -142,6 +161,16 @@ function EditorContent() {
     }
     if (!markdown || markdown.trim() === '') {
       setMessage({ type: 'error', text: '❌ Nội dung bài viết không được để trống' })
+      return
+    }
+
+    // Word count validation
+    const words = countWords(markdown)
+    if (words < 800) {
+      setMessage({ 
+        type: 'error', 
+        text: `❌ Bài viết quá ngắn! Hiện tại: ${words} từ. Yêu cầu tối thiểu: 800-1,000 từ để đạt chuẩn SEO và Google AdSense.` 
+      })
       return
     }
 
@@ -433,6 +462,72 @@ function EditorContent() {
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-600 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                 placeholder="Brief description for SEO"
               />
+            </div>
+          </div>
+        </div>
+
+        {/* Word Count Stats */}
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 mb-6 border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div>
+                <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Số từ:</span>
+                <span className={`ml-2 text-2xl font-bold ${
+                  wordCount < 800 ? 'text-red-600 dark:text-red-400' :
+                  wordCount >= 800 && wordCount < 1000 ? 'text-yellow-600 dark:text-yellow-400' :
+                  'text-green-600 dark:text-green-400'
+                }`}>
+                  {wordCount.toLocaleString()}
+                </span>
+              </div>
+              <div className="h-8 w-px bg-gray-300 dark:bg-gray-600"></div>
+              <div>
+                {wordCount < 800 ? (
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl">⚠️</span>
+                    <span className="text-sm text-red-600 dark:text-red-400 font-medium">
+                      Cần thêm {800 - wordCount} từ nữa (tối thiểu 800 từ)
+                    </span>
+                  </div>
+                ) : wordCount >= 800 && wordCount < 1000 ? (
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl">✅</span>
+                    <span className="text-sm text-yellow-600 dark:text-yellow-400 font-medium">
+                      Đạt tối thiểu! Khuyến nghị: 1,000 từ
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl">🎉</span>
+                    <span className="text-sm text-green-600 dark:text-green-400 font-medium">
+                      Tuyệt vời! Đạt chuẩn SEO & AdSense
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="hidden md:flex items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
+              <div className="text-center">
+                <div className="font-bold text-lg text-gray-900 dark:text-gray-100">800+</div>
+                <div>Tối thiểu</div>
+              </div>
+              <div className="text-center">
+                <div className="font-bold text-lg text-green-600 dark:text-green-400">1,000+</div>
+                <div>Khuyến nghị</div>
+              </div>
+            </div>
+          </div>
+          {/* Progress Bar */}
+          <div className="mt-3">
+            <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+              <div 
+                className={`h-full transition-all duration-300 ${
+                  wordCount < 800 ? 'bg-red-500' :
+                  wordCount >= 800 && wordCount < 1000 ? 'bg-yellow-500' :
+                  'bg-green-500'
+                }`}
+                style={{ width: `${Math.min((wordCount / 1000) * 100, 100)}%` }}
+              ></div>
             </div>
           </div>
         </div>

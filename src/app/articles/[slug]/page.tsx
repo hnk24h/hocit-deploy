@@ -8,6 +8,8 @@ import AuthorBio from '@/components/AuthorBio'
 import ViewTracker from '@/components/ViewTracker'
 import ViewCount from '@/components/ViewCount'
 import { StructuredData, generateBreadcrumbStructuredData } from '@/components/StructuredData'
+import { AdUnit, AdLeaderboard } from '@/components/ads'
+import ADS_CONFIG from '@/config/ads.config'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 
@@ -124,11 +126,21 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               </div>
             </header>
 
+            {/* Ad After Title */}
+            <div className="mb-8">
+              <AdLeaderboard slot={ADS_CONFIG.slots['article-top']} />
+            </div>
+
             {/* Article Content */}
             <div 
               className="prose prose-lg max-w-none prose-headings:text-gray-900 dark:prose-headings:text-gray-100 prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-strong:text-gray-900 dark:prose-strong:text-gray-100 prose-code:text-red-600 dark:prose-code:text-red-400 prose-pre:bg-gray-900 dark:prose-pre:bg-gray-800 prose-pre:text-gray-100 dark:prose-li:text-gray-300 dark:prose-blockquote:text-gray-300 dark:prose-blockquote:border-gray-600 [&_iframe]:w-full [&_iframe]:rounded-lg [&_iframe]:my-6"
               dangerouslySetInnerHTML={{ __html: contentHtml }}
             />
+
+            {/* Ad After Content */}
+            <div className="mt-8 mb-8">
+              <AdLeaderboard slot={ADS_CONFIG.slots['article-bottom']} />
+            </div>
 
             {/* Author Bio */}
             <AuthorBio />
@@ -138,10 +150,31 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           </article>
 
           {/* Table of Contents - Sticky Sidebar */}
-          {headings.length > 0 && (
+          {headings.length > 0 ? (
             <aside className="hidden lg:block w-64 flex-shrink-0">
-              <div className="sticky top-8">
+              <div className="sticky top-24 space-y-6">
+                {/* Ad Slot - Article Sidebar (Highest Revenue) */}
+                <div>
+                  <AdUnit 
+                    slot={ADS_CONFIG.slots['article-sidebar']} 
+                    size="300x600"
+                    className="rounded-2xl overflow-hidden shadow-elevation-2"
+                  />
+                </div>
+
+                {/* Table of Contents */}
                 <TableOfContents headings={headings} />
+              </div>
+            </aside>
+          ) : (
+            <aside className="hidden lg:block w-64 flex-shrink-0">
+              <div className="sticky top-24">
+                {/* Ad Slot - Article Sidebar (when no TOC) */}
+                <AdUnit 
+                  slot={ADS_CONFIG.slots['article-sidebar']} 
+                  size="300x600"
+                  className="rounded-2xl overflow-hidden shadow-elevation-2"
+                />
               </div>
             </aside>
           )}

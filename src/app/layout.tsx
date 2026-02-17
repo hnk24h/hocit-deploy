@@ -6,6 +6,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import { StructuredData } from '@/components/StructuredData'
+import AdSenseScript from '@/components/ads/AdSenseScript'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -57,6 +58,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className} suppressHydrationWarning>
         <GoogleAnalytics />
+        <AdSenseScript />
         {/* Skip to main content - Accessibility */}
         <a href="#main-content" className="skip-link">
           Skip to main content

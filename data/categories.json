@@ -106,6 +106,27 @@
       "icon": "📊",
       "description": "Marketing tools, SEO, analytics",
       "count": 0
+    },
+    {
+      "slug": "amazon",
+      "name": "Amazon",
+      "icon": "📦",
+      "description": "Sản phẩm và deals trên Amazon",
+      "count": 0
+    },
+    {
+      "slug": "rakuten",
+      "name": "Rakuten",
+      "icon": "🛒",
+      "description": "Sản phẩm và deals trên Rakuten",
+      "count": 0
+    },
+    {
+      "slug": "shopee",
+      "name": "Shopee",
+      "icon": "🛍️",
+      "description": "Sản phẩm và deals trên Shopee Việt Nam",
+      "count": 0
     }
   ]
 }

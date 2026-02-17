@@ -1,9 +1,12 @@
+import React from 'react'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { getAllArticlesMetadata } from '@/lib/articles'
 import { getCategories } from '@/lib/categories'
 import CategoryList from '@/components/CategoryList'
 import PopularPosts from '@/components/PopularPosts'
+import { AdUnit } from '@/components/ads'
+import ADS_CONFIG from '@/config/ads.config'
 
 export const metadata: Metadata = {
   title: 'Blog - Chia sẻ kiến thức lập trình và công nghệ',
@@ -85,6 +88,15 @@ export default function BlogPage() {
           {/* Sidebar - Categories */}
           <aside className="lg:col-span-3">
             <div className="sticky top-24 space-y-6">
+              {/* Ad Slot - Top of Sidebar */}
+              <div className="hidden lg:block">
+                <AdUnit 
+                  slot={ADS_CONFIG.slots['blog-sidebar-top']} 
+                  size="300x250"
+                  className="rounded-2xl overflow-hidden shadow-elevation-2"
+                />
+              </div>
+
               {/* Categories */}
               <div className="relative group/sidebar overflow-hidden bg-white dark:bg-gray-800 rounded-2xl shadow-elevation-2 border border-gray-200 dark:border-gray-700">
                 <div className="absolute inset-0 bg-gradient-to-br from-brand-500/5 to-purple-500/5 opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
@@ -119,6 +131,15 @@ export default function BlogPage() {
                   </div>
                   <PopularPosts limit={5} />
                 </div>
+              </div>
+
+              {/* Ad Slot - Mid Sidebar */}
+              <div className="hidden lg:block">
+                <AdUnit 
+                  slot={ADS_CONFIG.slots['blog-sidebar-mid']} 
+                  size="300x250"
+                  className="rounded-2xl overflow-hidden shadow-elevation-2"
+                />
               </div>
 
               {/* Social Subscription */}
@@ -176,75 +197,98 @@ export default function BlogPage() {
                   </a>
                 </div>
               </div>
+
+              {/* Ad Slot - Bottom of Sidebar */}
+              <div className="hidden lg:block">
+                <AdUnit 
+                  slot={ADS_CONFIG.slots['blog-sidebar-bottom']} 
+                  size="300x250"
+                  className="rounded-2xl overflow-hidden shadow-elevation-2"
+                />
+              </div>
             </div>
           </aside>
 
           {/* Articles List */}
           <main className="lg:col-span-9">
             <div className="space-y-6">
-              {sortedArticles.map((article) => {
+              {sortedArticles.map((article, index) => {
                 const categoryInfo = getCategoryInfo(article.category)
+                const showAdAfter = (index + 1) % 4 === 0 && index < sortedArticles.length - 1
+                
                 return (
-                  <article
-                    key={article.slug}
-                    className="bg-white dark:bg-gray-800 rounded-card shadow-elevation-2 hover:shadow-elevation-3 transition-all border border-gray-200 dark:border-gray-700 overflow-hidden group"
-                  >
-                    <Link 
-                      href={`/articles/${article.slug}`} 
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block p-6"
+                  <React.Fragment key={article.slug}>
+                    <article
+                      className="bg-white dark:bg-gray-800 rounded-card shadow-elevation-2 hover:shadow-elevation-3 transition-all border border-gray-200 dark:border-gray-700 overflow-hidden group"
                     >
-                      <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                        {/* Date Badge */}
-                        <div className="flex-shrink-0">
-                          <div className="bg-brand-50 dark:bg-brand-900/20 rounded-lg p-3 text-center min-w-[80px]">
-                            <div className="text-2xl font-bold text-brand-600 dark:text-brand-400">
-                              {new Date(article.date).getDate()}
+                      <Link 
+                        href={`/articles/${article.slug}`} 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block p-6"
+                      >
+                        <div className="flex flex-col sm:flex-row sm:items-start gap-4">
+                          {/* Date Badge */}
+                          <div className="flex-shrink-0">
+                            <div className="bg-brand-50 dark:bg-brand-900/20 rounded-lg p-3 text-center min-w-[80px]">
+                              <div className="text-2xl font-bold text-brand-600 dark:text-brand-400">
+                                {new Date(article.date).getDate()}
+                              </div>
+                              <div className="text-xs text-brand-600 dark:text-brand-400 font-medium">
+                                Tháng {new Date(article.date).getMonth() + 1}
+                              </div>
+                              <div className="text-xs text-gray-600 dark:text-gray-400">
+                                {new Date(article.date).getFullYear()}
+                              </div>
                             </div>
-                            <div className="text-xs text-brand-600 dark:text-brand-400 font-medium">
-                              Tháng {new Date(article.date).getMonth() + 1}
+                          </div>
+
+                          {/* Content */}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex flex-wrap items-center gap-3 mb-3">
+                              <span className="inline-flex items-center gap-1 bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300 text-xs font-medium px-3 py-1 rounded-full">
+                                {categoryInfo.icon} {categoryInfo.name}
+                              </span>
+                              <span className="text-sm text-gray-500 dark:text-gray-400">
+                                📅 {getRelativeTime(article.date)}
+                              </span>
                             </div>
-                            <div className="text-xs text-gray-600 dark:text-gray-400">
-                              {new Date(article.date).getFullYear()}
+
+                            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors line-clamp-2">
+                              {article.title}
+                            </h2>
+
+                            <p className="text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
+                              {article.description}
+                            </p>
+
+                            <div className="flex items-center justify-between">
+                              <span className="text-sm text-gray-500 dark:text-gray-400">
+                                {formatDate(article.date)}
+                              </span>
+                              <span className="text-brand-600 dark:text-brand-400 font-medium text-sm group-hover:gap-2 flex items-center gap-1 transition-all">
+                                Đọc thêm
+                                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                              </span>
                             </div>
                           </div>
                         </div>
+                      </Link>
+                    </article>
 
-                        {/* Content */}
-                        <div className="flex-1 min-w-0">
-                          <div className="flex flex-wrap items-center gap-3 mb-3">
-                            <span className="inline-flex items-center gap-1 bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300 text-xs font-medium px-3 py-1 rounded-full">
-                              {categoryInfo.icon} {categoryInfo.name}
-                            </span>
-                            <span className="text-sm text-gray-500 dark:text-gray-400">
-                              📅 {getRelativeTime(article.date)}
-                            </span>
-                          </div>
-
-                          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors line-clamp-2">
-                            {article.title}
-                          </h2>
-
-                          <p className="text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
-                            {article.description}
-                          </p>
-
-                          <div className="flex items-center justify-between">
-                            <span className="text-sm text-gray-500 dark:text-gray-400">
-                              {formatDate(article.date)}
-                            </span>
-                            <span className="text-brand-600 dark:text-brand-400 font-medium text-sm group-hover:gap-2 flex items-center gap-1 transition-all">
-                              Đọc thêm
-                              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
+                    {/* Ad Slot - Between Articles (every 4th article) */}
+                    {showAdAfter && (
+                      <div className="flex justify-center">
+                        <AdUnit 
+                          slot={ADS_CONFIG.slots[index < 4 ? 'blog-inline-1' : 'blog-inline-2']} 
+                          size="728x90"
+                          className="rounded-2xl overflow-hidden shadow-elevation-2"
+                        />
                       </div>
-                    </Link>
-                  </article>
+                    )}
+                  </React.Fragment>
                 )
               })}
 
