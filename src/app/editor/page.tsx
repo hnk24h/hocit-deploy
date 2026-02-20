@@ -78,7 +78,9 @@ function EditorContent() {
 
   const loadCategories = async () => {
     try {
-      const response = await fetch('/api/admin/categories')
+      const response = await fetch('/api/admin/categories', {
+        credentials: 'include'
+      })
       const data = await response.json()
       if (response.ok && data.success) {
         setCategories(data.categories || [])
@@ -187,6 +189,7 @@ function EditorContent() {
           ...formData,
           content: markdown,
         }),
+        credentials: 'include',
       })
 
       const data = await response.json()
@@ -256,6 +259,7 @@ function EditorContent() {
           slug: formData.slug,
           title: formData.title,
         }),
+        credentials: 'include',
       })
 
       const data = await response.json()

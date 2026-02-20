@@ -152,12 +152,12 @@ export default function SearchBar({ compact = false }: SearchBarProps) {
         )}
 
         {/* Keyboard Shortcut Hint (Desktop) */}
-        {!compact && !query && (
+        {/* !compact && !query && (
           <div className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 items-center gap-1 text-xs text-gray-400 bg-white dark:bg-gray-700 px-2 py-1 rounded border border-gray-200 dark:border-gray-600">
             <HiCommandLine className="w-3 h-3" />
             <kbd className="font-mono">K</kbd>
           </div>
-        )}
+        )*/}
       </form>
 
       {/* Mega Menu - Show on focus */}

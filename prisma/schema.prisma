@@ -45,6 +45,84 @@ model ArticleStats {
 }
 
 // ============================================
+// COMMENT SYSTEM (Active)
+// ============================================
+
+// User Authentication System
+model User {
+  id            String     @id @default(cuid())
+  email         String     @unique
+  username      String     @unique
+  password      String     // Hashed password
+  name          String?    // Display name
+  avatar        String?    // Avatar URL
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  
+  comments      Comment[]
+  favorites     Favorite[]
+  sessions      Session[]
+  
+  @@index([email])
+  @@index([username])
+}
+
+// User Sessions (for NextAuth or custom auth)
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  token        String   @unique
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+  
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([token])
+}
+
+// Comments for blog articles
+model Comment {
+  id          String    @id @default(cuid())
+  articleSlug String    // Article identifier
+  userId      String?   // Optional: Link to registered user
+  author      String    // Display name (from user or guest)
+  email       String    // Email (for moderation, not displayed)
+  content     String    // Comment text
+  parentId    String?   // For nested replies
+  approved    Boolean   @default(true) // Auto-approved (spam filter via rate limiting)
+  ipHash      String?   // Anonymized IP for spam prevention
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  user        User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  // Self-referential relation for nested replies
+  parent      Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies     Comment[] @relation("CommentReplies")
+  
+  @@index([articleSlug])
+  @@index([userId])
+  @@index([approved])
+  @@index([createdAt])
+  @@index([parentId])
+}
+
+// User's favorite articles
+model Favorite {
+  id          String   @id @default(cuid())
+  userId      String
+  articleSlug String
+  createdAt   DateTime @default(now())
+  
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, articleSlug]) // Prevent duplicate favorites
+  @@index([userId])
+  @@index([articleSlug])
+}
+
+// ============================================
 // AFFILIATE MODELS (Commented - uncomment when using PostgreSQL)
 // ============================================
 // Note: These models use features not supported in SQLite (@db.Text, String[])

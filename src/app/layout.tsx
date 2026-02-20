@@ -8,6 +8,7 @@ import MobileBottomNav from '@/components/MobileBottomNav'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import { StructuredData } from '@/components/StructuredData'
 import AdSenseScript from '@/components/ads/AdSenseScript'
+import { AuthProvider } from '@/contexts/AuthContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -60,18 +61,20 @@ export default function RootLayout({
       <body className={inter.className} suppressHydrationWarning>
         <GoogleAnalytics />
         <AdSenseScript />
-        {/* Skip to main content - Accessibility */}
-        <a href="#main-content" className="skip-link">
-          Skip to main content
-        </a>
-        <div className="flex flex-col min-h-screen pb-16 lg:pb-0">
-          <Header />
-          <main id="main-content" className="flex-grow">
-            {children}
-          </main>
-          <Footer />
-          <MobileBottomNav />
-        </div>
+        <AuthProvider>
+          {/* Skip to main content - Accessibility */}
+          <a href="#main-content" className="skip-link">
+            Skip to main content
+          </a>
+          <div className="flex flex-col min-h-screen pb-16 lg:pb-0">
+            <Header />
+            <main id="main-content" className="flex-grow">
+              {children}
+            </main>
+            <Footer />
+            <MobileBottomNav />
+          </div>
+        </AuthProvider>
       </body>
     </html>
   )

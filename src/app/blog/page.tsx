@@ -65,7 +65,7 @@ export default function BlogPage() {
               📝 Blog
             </h1>
             <p className="text-xl text-brand-100 mb-6 animate-slide-up">
-              Chia sẻ kiến thức về lập trình, công nghệ và những trải nghiệm thực tế
+              Chia sẻ kiến thức về sản phẩm công nghệ, về lập trình, công nghệ và những trải nghiệm thực tế
             </p>
             <div className="flex flex-wrap gap-3 animate-scale-in">
               <div className="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-sm">
@@ -152,7 +152,7 @@ export default function BlogPage() {
                 </p>
                 <div className="space-y-3">
                   <a
-                    href="https://youtube.com/@yourchannelhere"
+                    href="https://youtube.com/@ikagi.site"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm px-4 py-3 rounded-lg transition-all hover:scale-105"
@@ -167,7 +167,7 @@ export default function BlogPage() {
                   </a>
 
                   <a
-                    href="https://facebook.com/yourpage"
+                    href="https://facebook.com/ikagi.site"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm px-4 py-3 rounded-lg transition-all hover:scale-105"
@@ -182,7 +182,7 @@ export default function BlogPage() {
                   </a>
 
                   <a
-                    href="https://tiktok.com/@yourhandle"
+                    href="https://tiktok.com/@ikagi.site"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm px-4 py-3 rounded-lg transition-all hover:scale-105"

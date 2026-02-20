@@ -70,3 +70,49 @@ export function verifySessionToken(sessionToken: string): { valid: boolean; user
     return { valid: false }
   }
 }
+
+// User Authentication Helper
+import { NextRequest } from 'next/server'
+import { prisma } from '@/lib/prisma'
+
+export interface CurrentUser {
+  id: string
+  email: string
+  username: string
+  name: string | null
+  avatar: string | null
+}
+
+export async function getCurrentUser(request: NextRequest): Promise<CurrentUser | null> {
+  try {
+    const token = request.cookies.get('auth_token')?.value
+
+    if (!token) {
+      return null
+    }
+
+    const session = await prisma.session.findUnique({
+      where: { token },
+      include: {
+        user: {
+          select: {
+            id: true,
+            email: true,
+            username: true,
+            name: true,
+            avatar: true,
+          }
+        }
+      }
+    })
+
+    if (!session || session.expiresAt < new Date()) {
+      return null
+    }
+
+    return session.user
+  } catch (error) {
+    console.error('Get current user error:', error)
+    return null
+  }
+}

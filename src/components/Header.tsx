@@ -3,9 +3,11 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import ThemeToggle from './ThemeToggle'
+import UserMenu from './UserMenu'
 import Logo from './Logo'
 import SearchBar from './SearchBar'
 import { useState, useEffect, useRef } from 'react'
+import { useAuth } from '@/contexts/AuthContext'
 import { 
   HiNewspaper,
   HiShoppingBag,
@@ -21,6 +23,7 @@ import {
 
 export default function Header() {
   const pathname = usePathname()
+  const { user } = useAuth()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [aboutMenuOpen, setAboutMenuOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
@@ -73,7 +76,7 @@ export default function Header() {
         }}
       />
       
-      <nav className="max-w-7xl mx-auto px-4 py-3.5" role="navigation" aria-label="Main navigation">
+      <nav className="max-w-[1440px] mx-auto px-4 py-3.5" role="navigation" aria-label="Main navigation">
         <div className="flex justify-between items-center gap-4">
           {/* Logo - Compact */}
           <div className="flex-shrink-0">
@@ -214,13 +217,22 @@ export default function Header() {
               </div>
             </nav>
             
+            {/* Only show standalone ThemeToggle when user is not logged in */}
+            {!user && (
+              <>
+                <div className="h-8 w-px bg-gray-200 dark:bg-gray-700"></div>
+                <ThemeToggle />
+              </>
+            )}
+            
             <div className="h-8 w-px bg-gray-200 dark:bg-gray-700"></div>
             
-            <ThemeToggle />
+            <UserMenu />
           </div>
 
           {/* Mobile Menu Button */}
           <div className="flex lg:hidden items-center gap-3">
+            <UserMenu />
             <ThemeToggle />
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

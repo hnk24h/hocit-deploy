@@ -59,7 +59,7 @@ export default function Logo({ size = 'md', showText = true, className = '' }: L
             Ikagi
           </span>
           <span className="text-[0.6em] font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-            Affiliate Hub
+            Insightful Guides & Deals
           </span>
         </div>
       )}

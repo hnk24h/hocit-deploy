@@ -3,10 +3,11 @@ import { markdownToHtml } from '@/lib/markdown'
 import { extractHeadings, addHeadingIds } from '@/lib/toc'
 import TableOfContents from '@/components/TableOfContents'
 import PrismLoader from '@/components/PrismLoader'
-import GiscusComments from '@/components/GiscusComments'
+import Comments from '@/components/Comments'
 import AuthorBio from '@/components/AuthorBio'
 import ViewTracker from '@/components/ViewTracker'
 import ViewCount from '@/components/ViewCount'
+import FavoriteButton from '@/components/FavoriteButton'
 import { StructuredData, generateBreadcrumbStructuredData } from '@/components/StructuredData'
 import { AdUnit, AdLeaderboard } from '@/components/ads'
 import ADS_CONFIG from '@/config/ads.config'
@@ -114,7 +115,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               <p className="text-xl text-gray-600 dark:text-gray-400 mb-4">
                 {article.description}
               </p>
-              <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-500">
+              <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-500 flex-wrap">
                 <time>
                   📅 {new Date(article.date).toLocaleDateString('vi-VN', {
                     year: 'numeric',
@@ -123,6 +124,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   })}
                 </time>
                 <ViewCount slug={article.slug} />
+                <FavoriteButton articleSlug={article.slug} />
               </div>
             </header>
 
@@ -146,7 +148,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             <AuthorBio />
 
             {/* Comments Section */}
-            <GiscusComments slug={article.slug} title={article.title} />
+            <Comments articleSlug={article.slug} />
           </article>
 
           {/* Table of Contents - Sticky Sidebar */}

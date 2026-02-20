@@ -102,7 +102,7 @@ export default function AdminPage() {
         </div>
 
         {/* Quick Stats */}
-        <div className="grid md:grid-cols-4 gap-6 mb-8">
+        <div className="grid md:grid-cols-5 gap-6 mb-8">
           <div className="card p-6">
             <div className="text-3xl mb-2">📄</div>
             <div className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -130,6 +130,16 @@ export default function AdminPage() {
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-400">
               Quản lý danh mục
+            </div>
+          </Link>
+
+          <Link href="/admin/comments" className="card card-interactive p-6">
+            <div className="text-3xl mb-2">💬</div>
+            <div className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+              Comments
+            </div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">
+              Duyệt comments
             </div>
           </Link>
 
